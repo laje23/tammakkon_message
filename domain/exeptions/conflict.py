@@ -3,10 +3,7 @@ from domain.types import CategoryErrorsType
 
 
 class ConflictError(AppError):
-    def __init__(self, message, details = None):
+    def __init__(self, message, details=None):
         super().__init__(
-            message,
-            "CONFLICT_ERROR",
-            CategoryErrorsType.CONFLICT.value ,
-            details
+            message, "CONFLICT_ERROR", CategoryErrorsType.CONFLICT.value, details
         )

@@ -1,30 +1,33 @@
 from dataclasses import dataclass, field
 from datetime import datetime
-from domain.types import PlatformType
+from domain.types import DestinationType
 
 
 @dataclass
-class BotAccount:
+class Destination:
     id: int
-    platform: PlatformType
-    name: str
-    token: str
+    external_id: str
+    bot_account_id: int
+    type: DestinationType
     is_active: bool
     created_at: datetime = field(default_factory=datetime.now)
     updated_at: datetime | None = None
 
     def update(
         self,
-        platform: PlatformType | None = None,
-        name: str | None = None,
-        token: str | None = None,
+        external_id: str | None = None,
+        bot_account_id: int | None = None,
+        type: DestinationType | None = None,
     ):
-        if token is not None:
-            self.token = token
-        if platform is not None:
-            self.platform = platform
-        if name is not None:
-            self.name = name
+        if external_id is not None:
+            self.external_id = external_id
+
+        if bot_account_id is not None:
+            self.bot_account_id = bot_account_id
+
+        if type is not None:
+            self.type = type
+
         self.updated_at = datetime.now()
 
     def activate(self):

@@ -3,10 +3,7 @@ from domain.types import CategoryErrorsType
 
 
 class ValidationError(AppError):
-    def __init__(self, message, details = None):
+    def __init__(self, message, details=None):
         super().__init__(
-            message,
-            "VALIDATION_ERROR",
-            CategoryErrorsType.VALIDATION.value ,
-            details
+            message, "VALIDATION_ERROR", CategoryErrorsType.VALIDATION.value, details
         )
