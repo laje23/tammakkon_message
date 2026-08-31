@@ -1,6 +1,6 @@
 from dataclasses import dataclass , field
 from datetime import datetime
-from domain.types.platform_type import PlatformType 
+from domain.types import PlatformType 
 
 @dataclass
 class BotAccount():
