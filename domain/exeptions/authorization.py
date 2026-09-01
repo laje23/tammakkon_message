@@ -7,6 +7,6 @@ class AuthorizationError(AppError):
         super().__init__(
             message,
             "AUTHORIZATION_ERROR",
-            CategoryErrorsType.AUTHORIZATION_ERROR.value,
+            CategoryErrorsType.AUTHORIZATION_ERROR,
             details,
         )

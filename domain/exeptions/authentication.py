@@ -7,6 +7,6 @@ class AuthenticationError(AppError):
         super().__init__(
             message,
             "AUTHENTICATION_ERROR",
-            CategoryErrorsType.AUTHENTICATION.value,
+            CategoryErrorsType.AUTHENTICATION,
             details,
         )

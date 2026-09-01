@@ -7,6 +7,6 @@ class ConnectionFailedError(AppError):
         super().__init__(
             message,
             "CONNECTION_FAILED_ERROR",
-            CategoryErrorsType.CONNECTION_FAILED.value,
+            CategoryErrorsType.CONNECTION_FAILED,
             details,
         )
