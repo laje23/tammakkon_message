@@ -2,7 +2,7 @@ from .authentication import AuthenticationError
 from .authorization import AuthorizationError
 from .base import AppError
 from .conflict import ConflictError
-from .base_failed import baseFailedError
+from .connection_failed import baseFailedError
 from .invalid_state import InvalidStateError
 from .not_found import NotFoundError
 from .operation_failed import OperationFailedError
