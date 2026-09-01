@@ -4,3 +4,6 @@ from .log import Log
 from .media import Media
 from .message import Message
 from .message_target import MessageTarget
+from .role import Role
+from .user import User
+from .user_account import UserAccount

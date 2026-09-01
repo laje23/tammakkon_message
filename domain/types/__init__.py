@@ -4,4 +4,5 @@ from .log_category import LogCategory
 from .log_level import LogLevel
 from .message_target_status import MessageTargetStatusType
 from .message_type import MessageType
+from .permission_type import PermissionTyoe
 from .platform_type import PlatformType
