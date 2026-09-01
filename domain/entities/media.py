@@ -4,7 +4,7 @@ from datetime import datetime
 
 @dataclass
 class Media:
-    id: int |None
+    id: int | None
     message_id: int
     original_name: str
     stored_name: str
