@@ -6,7 +6,7 @@ from datetime import datetime
 class Role:
     id: int | None
     name: str
-    descrtiption: str | None
+    description: str | None
     created_at: datetime = field(default_factory=datetime.now)
     updated_at: datetime | None = None
 

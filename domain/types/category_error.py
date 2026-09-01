@@ -2,7 +2,7 @@ from enum import Enum
 
 
 class CategoryErrorsType(Enum):
-    CONNECTION_FAILED = "connection_failed"
+    base_FAILED = "base_failed"
     OPERATION_FAILED = "operation_failde"
     EXTERNAL_SERVICE = "external_service"
     AUTHORIZATION_ERROR = "authorization"
