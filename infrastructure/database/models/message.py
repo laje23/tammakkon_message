@@ -43,4 +43,3 @@ class MessageModel(Base):
         DateTime,
         nullable=True,
     )
-

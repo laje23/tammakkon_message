@@ -5,7 +5,6 @@ from sqlalchemy.orm import Session
 
 from infrastructure.database.base import Base
 
-
 ModelT = TypeVar("ModelT", bound=Base)
 
 

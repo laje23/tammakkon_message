@@ -44,4 +44,3 @@ class DestinationMapper:
         model.updated_at = entity.updated_at
 
         return model
-

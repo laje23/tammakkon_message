@@ -42,4 +42,3 @@ class MediaModel(Base):
         DateTime,
         nullable=True,
     )
-
