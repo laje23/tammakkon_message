@@ -5,7 +5,7 @@ from domain.types import MessageType
 
 @dataclass
 class Message:
-    id: int
+    id: int | None
     media_id: int | None
     type: MessageType
     text: str

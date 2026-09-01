@@ -5,9 +5,9 @@ from domain.types import DestinationType
 
 @dataclass
 class Destination:
-    id: int
+    id: int | None
     external_id: str
-    name : str 
+    name: str
     bot_account_id: int
     type: DestinationType
     is_active: bool
@@ -16,7 +16,7 @@ class Destination:
 
     def update(
         self,
-        name :str |None = None,
+        name: str | None = None,
         external_id: str | None = None,
         bot_account_id: int | None = None,
         type: DestinationType | None = None,
@@ -26,10 +26,10 @@ class Destination:
 
         if bot_account_id is not None:
             self.bot_account_id = bot_account_id
-            
+
         if name is not None:
-            self.name = name 
-            
+            self.name = name
+
         if type is not None:
             self.type = type
 

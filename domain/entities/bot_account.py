@@ -5,7 +5,7 @@ from domain.types import PlatformType
 
 @dataclass
 class BotAccount:
-    id: int
+    id: int | None
     platform: PlatformType
     name: str
     token: str
