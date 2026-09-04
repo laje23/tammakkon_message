@@ -1,7 +1,7 @@
 from domain.exeptions import ValidationError , NotFoundError
 from infrastructure.database.repository import SQLAlchemyRepository
 from sqlalchemy.orm import Session 
-from sqlalchemy import Select
+from sqlalchemy import select
 from infrastructure.database.models import DestinationModel
 from domain.entities import  Destination
 from infrastructure.database.mappers import DestinationMapper
@@ -62,7 +62,7 @@ class BotAccountRepository(SQLAlchemyRepository[DestinationModel] ,IDestinationR
     
     def get_by_type(self,destination_type:DestinationType)->list[Destination]:
         
-        query =Select(DestinationModel).where(
+        query =select(DestinationModel).where(
             DestinationModel.type == destination_type
         )
         entities = []
@@ -77,7 +77,7 @@ class BotAccountRepository(SQLAlchemyRepository[DestinationModel] ,IDestinationR
     
     def get_by_bot_account(self,bot_account_id:int)-> list[Destination]:
         
-        query =Select(DestinationModel).where(
+        query =select(DestinationModel).where(
             DestinationModel.bot_account_id == bot_account_id
         )
         

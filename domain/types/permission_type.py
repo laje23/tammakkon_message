@@ -1,6 +1,6 @@
 from enum import Enum
 
 
-class PermissionTyoe(Enum):
+class PermissionType(Enum):
     # todo................................................
     ...
