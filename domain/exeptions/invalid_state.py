@@ -7,6 +7,6 @@ class InvalidStateError(AppError):
         super().__init__(
             message,
             "INVALID_STATE_ERROR",
-            CategoryErrorsType.INVALID_STATE,
+            CategoryErrorsType.INVALID_STATE.value,
             details,
         )

@@ -7,6 +7,6 @@ class OperationFailedError(AppError):
         super().__init__(
             message,
             "OPERATION_FAILED_ERROR",
-            CategoryErrorsType.OPERATION_FAILED,
+            CategoryErrorsType.OPERATION_FAILED.value,
             details,
         )

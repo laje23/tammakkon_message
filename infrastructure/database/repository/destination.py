@@ -9,7 +9,7 @@ from domain.repositories import IDestinationRepository
 from domain.types import DestinationType
 
 
-class BotAccountRepository(
+class DestinationRepository(
     SQLAlchemyRepository[DestinationModel], IDestinationRepository
 ):
     def __init__(self, session: Session):

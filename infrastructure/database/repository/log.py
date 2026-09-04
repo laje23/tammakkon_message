@@ -60,3 +60,6 @@ class LogRepository(SQLAlchemyRepository[LogModel], ILogRepository):
             entities.append(self.mapper.to_entity(model))
 
         return entities
+
+    def update(self) -> None:
+        return None

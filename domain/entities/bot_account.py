@@ -9,7 +9,7 @@ class BotAccount:
     platform: PlatformType
     name: str
     token: str
-    is_active: bool
+    is_active: bool = False
     created_at: datetime = field(default_factory=datetime.now)
     updated_at: datetime | None = None
 

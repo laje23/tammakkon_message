@@ -8,7 +8,7 @@ from infrastructure.database.mappers import UserMapper
 from domain.repositories import IUserRepository
 
 
-class BotAccountRepository(SQLAlchemyRepository[UserModel], IUserRepository):
+class UserRepository(SQLAlchemyRepository[UserModel], IUserRepository):
     def __init__(self, session: Session):
         super().__init__(session)
         self.mapper = UserMapper()
@@ -51,3 +51,15 @@ class BotAccountRepository(SQLAlchemyRepository[UserModel], IUserRepository):
                 entities.append(self.mapper.to_entity(model))
 
         return entities
+    
+    def search_username(self, name: str) -> list[User]:
+        query = select(UserModel).where(
+            UserModel.user_name.ilike(f"%{name}%")
+        )
+
+        models = self.session.execute(query).scalars().all()
+
+        return [
+            self.mapper.to_entity(model)
+            for model in models
+        ]

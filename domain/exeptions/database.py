@@ -2,11 +2,11 @@ from domain.exeptions.base import AppError
 from domain.types import CategoryErrorsType
 
 
-class AuthorizationError(AppError):
+class DataBaseError(AppError):
     def __init__(self, message, details=None):
         super().__init__(
             message,
-            "AUTHORIZATION_ERROR",
-            CategoryErrorsType.AUTHORIZATION_ERROR.value,
+            "DATABASE_ERROR",
+            CategoryErrorsType.DATABASE.value,
             details,
         )

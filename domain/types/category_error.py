@@ -13,3 +13,4 @@ class CategoryErrorsType(Enum):
     NOT_FOUND = "not_found"
     CONFLICT = "conflict"
     SEND = "send"
+    DATABASE = "database"

@@ -1,0 +1,1 @@
+from .hash_service import IHashService

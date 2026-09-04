@@ -1,4 +1,5 @@
 from domain.exeptions import ValidationError, NotFoundError
+from domain.types.platform_type import PlatformType
 from infrastructure.database.repository import SQLAlchemyRepository
 from sqlalchemy.orm import Session
 from sqlalchemy import select
@@ -8,7 +9,7 @@ from infrastructure.database.mappers import UserAccountMapper
 from domain.repositories import IUserAccountRepository
 
 
-class BotAccountRepository(
+class UserAccountRepository(
     SQLAlchemyRepository[UserAccountModel], IUserAccountRepository
 ):
     def __init__(self, session: Session):

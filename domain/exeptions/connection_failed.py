@@ -7,6 +7,6 @@ class baseFailedError(AppError):
         super().__init__(
             message,
             "base_FAILED_ERROR",
-            CategoryErrorsType.base_FAILED,
+            CategoryErrorsType.base_FAILED.value,
             details,
         )

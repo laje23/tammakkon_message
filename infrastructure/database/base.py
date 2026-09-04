@@ -6,9 +6,7 @@ engine = create_engine(
     settings.DATABASE_URL if settings.DATABASE_URL else "", echo=True
 )
 
-
-SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
-
+sessionlocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 
 class Base(DeclarativeBase):
     pass

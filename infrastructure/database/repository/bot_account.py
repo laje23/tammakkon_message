@@ -1,6 +1,8 @@
 from domain.exeptions import ValidationError, NotFoundError
+from domain.types.platform_type import PlatformType
 from infrastructure.database.repository import SQLAlchemyRepository
 from sqlalchemy.orm import Session
+from sqlalchemy import select
 from infrastructure.database.models import BotAccountModel
 from domain.entities import BotAccount
 from infrastructure.database.mappers import BotAccountMapper
@@ -45,3 +47,16 @@ class BotAccountRepository(
 
     def get_all(self) -> list[BotAccountModel] | None:
         return super().get_all()
+
+    def get_by_platform(self, platform: PlatformType) -> list[BotAccount]:
+        query =select(BotAccountModel).where(BotAccountModel.platform == platform)
+        
+        models=self.session.execute(query).scalars().all()
+        
+        
+        entities = []
+        if models :
+            for model in models :
+                entities.append(self.mapper.to_entity(model))
+        
+        return entities

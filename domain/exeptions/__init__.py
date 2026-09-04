@@ -9,3 +9,4 @@ from .operation_failed import OperationFailedError
 from .rate_limit import RateLimitError
 from .send import SendError
 from .validation import ValidationError
+from .database import DataBaseError
