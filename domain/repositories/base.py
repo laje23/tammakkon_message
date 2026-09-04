@@ -7,7 +7,7 @@ T = TypeVar("T")
 class IBaseRepository(ABC, Generic[T]):
 
     @abstractmethod
-    def add(self, entity: T) -> T:
+    def add(self, entity: T) -> None:
         pass
 
     @abstractmethod
@@ -19,7 +19,7 @@ class IBaseRepository(ABC, Generic[T]):
         pass
 
     @abstractmethod
-    def update(self, entity: T) -> T:
+    def update(self, entity: T) -> None:
         pass
 
     @abstractmethod

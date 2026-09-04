@@ -13,12 +13,10 @@ class SQLAlchemyRepository(Generic[ModelT]):
     def __init__(self, session: Session):
         self.session = session
 
-    def create(self, model: ModelT) -> ModelT:
+    def create(self, model: ModelT) -> None:
         self.session.add(model)
         self.session.flush()
         self.session.refresh(model)
-
-        return model
 
     def get_by_id(self, model_id: int) -> ModelT | None:
         return self.session.get(self.model, model_id)
