@@ -1,7 +1,7 @@
 from domain.exeptions import ValidationError, NotFoundError
 from infrastructure.database.repository import SQLAlchemyRepository
-from sqlalchemy.orm import Session 
-from sqlalchemy import select , delete 
+from sqlalchemy.orm import Session
+from sqlalchemy import select, delete
 from infrastructure.database.models import RoleModel
 from domain.entities import Role
 from infrastructure.database.mappers import RoleMapper
@@ -22,14 +22,12 @@ class RoleRepository(SQLAlchemyRepository[RoleModel], IRoleRepository):
     def create(self, entity: Role):
         model = self.mapper.to_model(entity)
         model = super().create(model)
-    
+
     def _get_role_or_raise(self, role_id: int) -> RoleModel:
         role = super().get_by_id(role_id)
 
         if role is None:
-            raise NotFoundError(
-                f"Role with id={role_id} not found"
-            )
+            raise NotFoundError(f"Role with id={role_id} not found")
 
         return role
 
@@ -108,8 +106,7 @@ class RoleRepository(SQLAlchemyRepository[RoleModel], IRoleRepository):
 
         if role_permission is None:
             raise NotFoundError(
-                f"Permission '{permission.value}' "
-                f"not found for role_id={role_id}"
+                f"Permission '{permission.value}' " f"not found for role_id={role_id}"
             )
 
         self.session.delete(role_permission)
@@ -123,7 +120,7 @@ class RoleRepository(SQLAlchemyRepository[RoleModel], IRoleRepository):
 
         self.session.execute(delete_query)
         self.session.flush()
-        
+
     def has_permission(
         self,
         role_id: int,
@@ -138,8 +135,7 @@ class RoleRepository(SQLAlchemyRepository[RoleModel], IRoleRepository):
         )
 
         return True if self.session.scalar(query) is not None else False
-    
-    
+
     def get_permissions(
         self,
         role_id: int,
@@ -153,11 +149,8 @@ class RoleRepository(SQLAlchemyRepository[RoleModel], IRoleRepository):
 
         permissions = self.session.scalars(query).all()
 
-        return [
-            PermissionType(permission)
-            for permission in permissions
-        ]
-        
+        return [PermissionType(permission) for permission in permissions]
+
     def clear_permissions(
         self,
         role_id: int,

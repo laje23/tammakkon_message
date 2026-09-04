@@ -1,6 +1,7 @@
-from sqlalchemy import String , ForeignKey
-from sqlalchemy.orm import mapped_column , Mapped
+from sqlalchemy import String, ForeignKey
+from sqlalchemy.orm import mapped_column, Mapped
 from infrastructure.database import Base
+
 
 class RolePermissionModel(Base):
     __tablename__ = "role_permissions"
