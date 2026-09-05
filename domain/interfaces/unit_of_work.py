@@ -7,54 +7,42 @@ class IUnitOfWork(ABC):
 
     @property
     @abstractmethod
-    def user(self) -> IUserRepository:
-        ...
+    def user(self) -> IUserRepository: ...
 
     @property
     @abstractmethod
-    def role(self) -> IRoleRepository:
-        ...
+    def role(self) -> IRoleRepository: ...
 
     @property
     @abstractmethod
-    def bot_account(self) -> IBotAccountRepository:
-        ...
+    def bot_account(self) -> IBotAccountRepository: ...
 
     @property
     @abstractmethod
-    def destination(self) -> IDestinationRepository:
-        ...
-        
+    def destination(self) -> IDestinationRepository: ...
+
     @property
     @abstractmethod
-    def log(self)-> ILogRepository:
-        ...
-        
+    def log(self) -> ILogRepository: ...
+
     @property
     @abstractmethod
-    def message(self) -> IMessageRepository:
-        ...
-        
+    def message(self) -> IMessageRepository: ...
+
     @property
     @abstractmethod
-    def media(self) -> IMediaRepository:
-        ...
-        
+    def media(self) -> IMediaRepository: ...
+
     @property
     @abstractmethod
-    def user_account(self) -> IUserAccountRepository:
-        ...
-        
+    def user_account(self) -> IUserAccountRepository: ...
+
     @property
     @abstractmethod
-    def message_target(self) -> IMessageTargetRepository:
-        ...
-        
-    
+    def message_target(self) -> IMessageTargetRepository: ...
 
     @abstractmethod
-    def __enter__(self) -> "IUnitOfWork":
-        ...
+    def __enter__(self) -> "IUnitOfWork": ...
 
     @abstractmethod
     def __exit__(
@@ -62,5 +50,4 @@ class IUnitOfWork(ABC):
         exc_type,
         exc_value,
         traceback,
-    ) -> None:
-        ...
+    ) -> None: ...

@@ -3,10 +3,10 @@ from .authorization import AuthorizationError
 from .base import AppError
 from .conflict import ConflictError
 from .connection_failed import baseFailedError
+from .database import DataBaseError
 from .invalid_state import InvalidStateError
 from .not_found import NotFoundError
 from .operation_failed import OperationFailedError
 from .rate_limit import RateLimitError
 from .send import SendError
 from .validation import ValidationError
-from .database import DataBaseError

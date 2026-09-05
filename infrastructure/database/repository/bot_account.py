@@ -49,14 +49,13 @@ class BotAccountRepository(
         return super().get_all()
 
     def get_by_platform(self, platform: PlatformType) -> list[BotAccount]:
-        query =select(BotAccountModel).where(BotAccountModel.platform == platform)
-        
-        models=self.session.execute(query).scalars().all()
-        
-        
+        query = select(BotAccountModel).where(BotAccountModel.platform == platform)
+
+        models = self.session.execute(query).scalars().all()
+
         entities = []
-        if models :
-            for model in models :
+        if models:
+            for model in models:
                 entities.append(self.mapper.to_entity(model))
-        
+
         return entities

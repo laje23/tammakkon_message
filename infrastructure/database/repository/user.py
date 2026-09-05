@@ -51,15 +51,10 @@ class UserRepository(SQLAlchemyRepository[UserModel], IUserRepository):
                 entities.append(self.mapper.to_entity(model))
 
         return entities
-    
+
     def search_username(self, name: str) -> list[User]:
-        query = select(UserModel).where(
-            UserModel.user_name.ilike(f"%{name}%")
-        )
+        query = select(UserModel).where(UserModel.user_name.ilike(f"%{name}%"))
 
         models = self.session.execute(query).scalars().all()
 
-        return [
-            self.mapper.to_entity(model)
-            for model in models
-        ]
+        return [self.mapper.to_entity(model) for model in models]

@@ -7,5 +7,4 @@ from domain.types import PlatformType
 class IBotAccountRepository(IBaseRepository[BotAccount]):
 
     @abstractmethod
-    def get_by_platform(self , platform : PlatformType)-> list[BotAccount] :
-        ...
+    def get_by_platform(self, platform: PlatformType) -> list[BotAccount]: ...

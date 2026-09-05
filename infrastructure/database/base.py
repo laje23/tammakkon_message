@@ -8,5 +8,6 @@ engine = create_engine(
 
 sessionlocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 
+
 class Base(DeclarativeBase):
     pass

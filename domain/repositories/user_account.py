@@ -3,5 +3,4 @@ from domain.repositories import IBaseRepository
 from domain.entities import UserAccount
 
 
-class IUserAccountRepository(IBaseRepository[UserAccount]):
-    ...
+class IUserAccountRepository(IBaseRepository[UserAccount]): ...
