@@ -6,17 +6,19 @@ from domain.interfaces import IHashService , IUnitOfWork
 
 
 
-class CreateBotAccountUseCase():
+class UpdateBotAccountUseCase():
     
     def __init__(self , repository: IBotAccountRepository, hash_service:IHashService , uow:IUnitOfWork) -> None:
         self.repo = repository
         self.hash_service = hash_service
         self.uow = uow 
         
-    def execute(self ,platform: PlatformType ,  name :str , token : str):
-        token_hashed =self.hash_service.hash(token)
-        bot_account = BotAccount(None , platform , name , token_hashed , True)
+    def execute(self ,bot_account:BotAccount , name:str|None = None , token : str|None = None , platform:PlatformType|None = None):
+
+        token_hashed =self.hash_service.hash(token) if token else None
+        
+        bot_account.update(platform , name ,token_hashed)
 
         with self.uow as uow :
-            uow.bot_account.create(bot_account)
+            uow.bot_account.update(bot_account)
             

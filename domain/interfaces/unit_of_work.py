@@ -45,6 +45,11 @@ class IUnitOfWork(ABC):
     def user_account(self) -> IUserAccountRepository:
         ...
         
+    @property
+    @abstractmethod
+    def message_target(self) -> IMessageTargetRepository:
+        ...
+        
     
 
     @abstractmethod

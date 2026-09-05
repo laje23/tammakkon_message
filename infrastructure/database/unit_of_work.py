@@ -1,6 +1,6 @@
 from infrastructure.database.base import sessionlocal
 from infrastructure.database.repository import *
-from domain.exeptions import 
+from domain.exeptions import DataBaseError
 
 class UnitOfWork:
 
@@ -77,12 +77,19 @@ class UnitOfWork:
 
         return self._user_account
 
+    @property
+    def message_target(self) -> MessageTargetRepository:
+        if self._message_target is None and self.session is not None:
+            self._message_target = MessageTargetRepository(self.session)
+
+        return self._message_target
+
 
     def __exit__(self, exc_type, exc_value, traceback):
         if self.session :
             if exc_type is not None:
                 self.session.rollback()
-                raise 
+                raise DataBaseError("an error in databas" , {"type":exc_type,"error":exc_value})
             else:
                 self.session.commit()
 
