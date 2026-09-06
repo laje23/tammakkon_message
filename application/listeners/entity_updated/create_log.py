@@ -1,4 +1,4 @@
-from domain.events.update_entity import EntityUpdatedEvent
+from domain.events import EntityUpdatedEvent
 from domain.interfaces import ILogger
 
 
