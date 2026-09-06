@@ -24,6 +24,7 @@ class activationDestinationUseCase:
             self.logger.level.INFO,
             self.__class__.__name__,
         )
+
     def deactivate(self, entity: Destination):
         entity.deactivate()
 

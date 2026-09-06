@@ -30,7 +30,7 @@ class activationBotAccountUseCase:
             self.logger.level.INFO,
             self.__class__.__name__,
         )
-        
+
     def deactivate(self, entity: BotAccount):
         entity.deactivate()
 

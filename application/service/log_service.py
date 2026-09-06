@@ -1,9 +1,9 @@
 from domain.entities import Log
 from domain.types import LogCategory, LogLevel
-from domain.interfaces import IUnitOfWork
+from domain.interfaces import IUnitOfWork, ILogger
 
 
-class LogService:
+class LogService(ILogger):
     category = LogCategory
     level = LogLevel
 
