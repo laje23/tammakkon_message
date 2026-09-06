@@ -1,5 +1,4 @@
 from domain.entities import BotAccount
-from domain.repositories import IBotAccountRepository
 from domain.types import PlatformType
 from domain.interfaces import IHashService, IUnitOfWork, ILogger
 
@@ -8,12 +7,10 @@ class CreateBotAccountUseCase:
 
     def __init__(
         self,
-        repository: IBotAccountRepository,
         hash_service: IHashService,
         uow: IUnitOfWork,
         logger: ILogger,
     ) -> None:
-        self.repo = repository
         self.hash_service = hash_service
         self.uow = uow
         self.logger = logger

@@ -27,7 +27,7 @@ class DestinationModel(Base):
 
     bot_account_id: Mapped[int] = mapped_column(
         ForeignKey("bot_accounts.id"),
-        nullable=False,
+        nullable=True,
     )
 
     type: Mapped[DestinationType] = mapped_column(

@@ -24,6 +24,13 @@ class activationBotAccountUseCase:
         with self.uow as uow:
             uow.bot_account.update(entity)
 
+        self.logger.log(
+            "bout_account activated",
+            self.logger.category.AUTH,
+            self.logger.level.INFO,
+            self.__class__.__name__,
+        )
+        
     def deactivate(self, entity: BotAccount):
         entity.deactivate()
 
@@ -31,7 +38,7 @@ class activationBotAccountUseCase:
             uow.bot_account.update(entity)
 
         self.logger.log(
-            "bout_account created",
+            "bout_account deactivated",
             self.logger.category.AUTH,
             self.logger.level.INFO,
             self.__class__.__name__,

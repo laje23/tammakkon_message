@@ -8,9 +8,9 @@ class Destination:
     id: int | None
     external_id: str
     name: str
-    bot_account_id: int
+    bot_account_id: int|None
     type: DestinationType
-    is_active: bool
+    is_active: bool = False
     created_at: datetime = field(default_factory=datetime.now)
     updated_at: datetime | None = None
 
