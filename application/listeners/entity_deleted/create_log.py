@@ -1,4 +1,4 @@
-from domain.events import EntityDeletedEvent
+from application.events import EntityDeletedEvent
 from domain.interfaces import ILogger
 
 

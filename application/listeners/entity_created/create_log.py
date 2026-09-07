@@ -1,4 +1,4 @@
-from domain.events import EntityCreatedEvent
+from application.events import EntityCreatedEvent
 from domain.interfaces import ILogger
 
 
@@ -8,7 +8,7 @@ class CreateLogListener:
 
     def handle(self, event: EntityCreatedEvent) -> None:
         self.logger.log(
-            f"entity {event.entity_class_name} with name {event.entity_name} created",
+            f"entity {event.entity_class_name} created",
             self.logger.category.AUTH,
             self.logger.level.INFO,
             event.source,

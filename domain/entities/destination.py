@@ -1,10 +1,11 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 from domain.types import DestinationType
+from domain.base import AppEntity
 
 
 @dataclass
-class Destination:
+class Destination(AppEntity):
     id: int | None
     external_id: str
     name: str

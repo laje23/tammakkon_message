@@ -2,10 +2,11 @@ from dataclasses import dataclass, field
 from datetime import datetime
 
 from domain.types.message_target_status import MessageTargetStatusType
+from domain.base import AppEntity
 
 
 @dataclass
-class MessageTarget:
+class MessageTarget(AppEntity):
     id: int | None
     message_id: int
     destination_id: int

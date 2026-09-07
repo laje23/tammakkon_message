@@ -4,8 +4,7 @@ from dataclasses import dataclass
 
 
 @dataclass(frozen=True)
-class EntityUpdatedEvent:
+class EntityCreatedEvent:
+    entity: object
     entity_class_name: str
-    entity_name: str|None
-    entity_id: int
     source: str

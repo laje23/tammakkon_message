@@ -1,9 +1,10 @@
 from dataclasses import dataclass, field
 from datetime import datetime
+from domain.base import AppEntity
 
 
 @dataclass
-class Media:
+class Media(AppEntity):
     id: int | None
     message_id: int
     original_name: str

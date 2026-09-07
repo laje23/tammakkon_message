@@ -1,3 +1,4 @@
+from .command_bus import IEventBus
 from .event_bus import IEventBus
 from .hash_service import IHashService
 from .log_service import ILogger

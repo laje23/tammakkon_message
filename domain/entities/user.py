@@ -1,9 +1,10 @@
 from dataclasses import dataclass, field
 from datetime import datetime
+from domain.base import AppEntity
 
 
 @dataclass
-class User:
+class User(AppEntity):
     id: int | None
     user_name: str
     password: str

@@ -1,9 +1,10 @@
 from dataclasses import dataclass, field
 from datetime import datetime
+from domain.base import AppEntity
 
 
 @dataclass
-class Role:
+class Role(AppEntity):
     id: int | None
     name: str
     description: str | None

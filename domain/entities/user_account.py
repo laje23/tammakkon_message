@@ -1,10 +1,11 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 from domain.types import PlatformType
+from domain.base import AppEntity
 
 
 @dataclass
-class UserAccount:
+class UserAccount(AppEntity):
     id: int | None
     user_id: int
     platform: PlatformType
