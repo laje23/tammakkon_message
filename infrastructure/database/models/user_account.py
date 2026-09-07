@@ -4,10 +4,10 @@ from sqlalchemy import DateTime, Enum, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from domain.types import PlatformType
-from infrastructure.database.base import Base
+from infrastructure.database.base import BaseModel
 
 
-class UserAccountModel(Base):
+class UserAccountModel(BaseModel):
     __tablename__ = "user_accounts"
 
     id: Mapped[int] = mapped_column(

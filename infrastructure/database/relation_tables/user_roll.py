@@ -1,10 +1,10 @@
 from sqlalchemy import ForeignKey, Table, Column
 
-from infrastructure.database.base import Base
+from infrastructure.database.base import BaseModel
 
 user_role_table = Table(
     "user_roles",
-    Base.metadata,
+    BaseModel.metadata,
     Column(
         "user_id",
         ForeignKey("users.id", ondelete="CASCADE"),

@@ -4,10 +4,10 @@ from sqlalchemy import DateTime, Enum, ForeignKey, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from domain.types import MessageType
-from infrastructure.database.base import Base
+from infrastructure.database.base import BaseModel
 
 
-class MessageModel(Base):
+class MessageModel(BaseModel):
     __tablename__ = "messages"
 
     id: Mapped[int] = mapped_column(

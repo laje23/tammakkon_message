@@ -4,10 +4,10 @@ from sqlalchemy import Boolean, DateTime, Enum, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from domain.types import DestinationType
-from infrastructure.database.base import Base
+from infrastructure.database.base import BaseModel
 
 
-class DestinationModel(Base):
+class DestinationModel(BaseModel):
     __tablename__ = "destinations"
 
     id: Mapped[int] = mapped_column(

@@ -3,10 +3,10 @@ from datetime import datetime
 from sqlalchemy import Boolean, DateTime, String
 from sqlalchemy.orm import Mapped, mapped_column
 
-from infrastructure.database.base import Base
+from infrastructure.database.base import BaseModel
 
 
-class UserModel(Base):
+class UserModel(BaseModel):
     __tablename__ = "users"
 
     id: Mapped[int] = mapped_column(

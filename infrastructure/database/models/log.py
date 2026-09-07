@@ -4,10 +4,10 @@ from sqlalchemy import DateTime, Enum, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from domain.types import LogCategory, LogLevel
-from infrastructure.database.base import Base
+from infrastructure.database.base import BaseModel
 
 
-class LogModel(Base):
+class LogModel(BaseModel):
     __tablename__ = "logs"
 
     id: Mapped[int] = mapped_column(

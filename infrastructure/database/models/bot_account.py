@@ -4,10 +4,10 @@ from sqlalchemy import Boolean, DateTime, Enum, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from domain.types import PlatformType
-from infrastructure.database.base import Base
+from infrastructure.database.base import BaseModel
 
 
-class BotAccountModel(Base):
+class BotAccountModel(BaseModel):
     __tablename__ = "bot_accounts"
 
     id: Mapped[int] = mapped_column(

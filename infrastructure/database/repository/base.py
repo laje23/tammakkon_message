@@ -3,9 +3,9 @@ from typing import Generic, TypeVar
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from infrastructure.database.base import Base
+from infrastructure.database.base import BaseModel
 
-ModelT = TypeVar("ModelT", bound=Base)
+ModelT = TypeVar("ModelT", bound=BaseModel)
 
 
 class SQLAlchemyRepository(Generic[ModelT]):
@@ -13,10 +13,12 @@ class SQLAlchemyRepository(Generic[ModelT]):
     def __init__(self, session: Session):
         self.session = session
 
-    def create(self, model: ModelT) -> None:
+    def create(self, model: ModelT) -> int :
         self.session.add(model)
         self.session.flush()
         self.session.refresh(model)
+        
+        return model.id 
 
     def get_by_id(self, model_id: int) -> ModelT | None:
         return self.session.get(self.model, model_id)

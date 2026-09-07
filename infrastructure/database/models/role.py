@@ -3,10 +3,10 @@ from datetime import datetime
 from sqlalchemy import DateTime, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
-from infrastructure.database.base import Base
+from infrastructure.database.base import BaseModel
 
 
-class RoleModel(Base):
+class RoleModel(BaseModel):
     __tablename__ = "roles"
 
     id: Mapped[int] = mapped_column(

@@ -1,9 +1,9 @@
 from sqlalchemy import String, ForeignKey
 from sqlalchemy.orm import mapped_column, Mapped
-from infrastructure.database import Base
+from infrastructure.database import BaseModel
 
 
-class RolePermissionModel(Base):
+class RolePermissionModel(BaseModel):
     __tablename__ = "role_permissions"
 
     role_id: Mapped[int] = mapped_column(
