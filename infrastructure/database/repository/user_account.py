@@ -24,7 +24,7 @@ class UserAccountRepository(
         model = self.mapper.to_model(entity)
         model = super().create(model)
 
-    def update(self, entity: UserAccount):
+    def update(self, entity: UserAccount)-> int :
         if not entity.id:
             raise ValidationError("entity id is empty")
 
@@ -37,6 +37,7 @@ class UserAccountRepository(
 
         self.session.flush()
         self.session.refresh(model)
+        return model.id
 
     def get_by_id(self, id: int) -> UserAccount | None:
         model = super().get_by_id(id)

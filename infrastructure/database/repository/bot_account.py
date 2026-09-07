@@ -24,7 +24,7 @@ class BotAccountRepository(
         model = self.mapper.to_model(entity)
         model = super().create(model)
 
-    def update(self, entity: BotAccount):
+    def update(self, entity: BotAccount)->int :
         if not entity.id:
             raise ValidationError("entity id is empty")
 
@@ -37,6 +37,7 @@ class BotAccountRepository(
 
         self.session.flush()
         self.session.refresh(model)
+        return model.id
 
     def delete(self, entity: BotAccount) -> None:
         model = self.mapper.to_model(entity)

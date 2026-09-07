@@ -24,7 +24,7 @@ class DestinationRepository(
         model = self.mapper.to_model(entity)
         model = super().create(model)
 
-    def update(self, entity: Destination):
+    def update(self, entity: Destination)->int :
         if not entity.id:
             raise ValidationError("entity id is empty")
 
@@ -37,6 +37,7 @@ class DestinationRepository(
 
         self.session.flush()
         self.session.refresh(model)
+        return model.id
 
     def delete(self, entity: Destination) -> None:
         model = self.mapper.to_model(entity)

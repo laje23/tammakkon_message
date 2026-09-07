@@ -19,7 +19,7 @@ class IBaseRepository(ABC, Generic[T]):
         pass
 
     @abstractmethod
-    def update(self, entity: T) -> None:
+    def update(self, entity: T) -> int:
         pass
 
     @abstractmethod

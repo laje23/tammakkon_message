@@ -1,15 +1,15 @@
 from domain.interfaces import IUnitOfWork, IEventBus
-from application.commands import CreateEntityCommand
+from application.commands import UpdateEntityCommand
 from application.events import EntityCreatedEvent
 from domain.exeptions import OperationFailedError
 
 
-class CreateEntityHandler:
+class UpdateEntityHandler:
     def __init__(self, unit_of_work: IUnitOfWork, event_bus: IEventBus) -> None:
         self.unit_of_work = unit_of_work
         self.event_bus = event_bus
 
-    def handle(self, command: CreateEntityCommand):
+    def handle(self, command: UpdateEntityCommand):
         try:
             entity_class = command.entity_class
             entity = entity_class(**command.attributes)
@@ -18,7 +18,7 @@ class CreateEntityHandler:
 
         with self.unit_of_work as uow:
             repo = uow.get_repository(entity_class)
-            entity_id = repo.create(entity)
+            entity_id = repo.update(entity)
 
         self.event_bus.publish(
             EntityCreatedEvent(entity_id, entity_class.__name__, self.__class__.__name__)

@@ -22,7 +22,7 @@ class MessageTargetRepository(
         model = self.mapper.to_model(entity)
         model = super().create(model)
 
-    def update(self, entity: MessageTarget):
+    def update(self, entity: MessageTarget)-> int :
         if not entity.id:
             raise ValidationError("entity id is empty")
 
@@ -35,7 +35,8 @@ class MessageTargetRepository(
 
         self.session.flush()
         self.session.refresh(model)
-
+        return model.id
+    
     def get_by_id(self, id: int) -> MessageTarget | None:
         model = super().get_by_id(id)
         if model:
