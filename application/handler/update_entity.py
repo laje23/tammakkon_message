@@ -1,6 +1,6 @@
 from domain.interfaces import IUnitOfWork, IEventBus
 from application.commands import UpdateEntityCommand
-from application.events import EntityCreatedEvent
+from application.events import EntityUpdatedEvent
 from domain.exeptions import OperationFailedError
 
 
@@ -21,5 +21,5 @@ class UpdateEntityHandler:
             entity_id = repo.update(entity)
 
         self.event_bus.publish(
-            EntityCreatedEvent(entity_id, entity_class.__name__, self.__class__.__name__)
+            EntityUpdatedEvent(entity_id, entity_class.__name__, self.__class__.__name__)
         )

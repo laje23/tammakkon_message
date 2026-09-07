@@ -1,3 +1,4 @@
 from .create_entity import CreateEntityCommand
 from .update_entity import UpdateEntityCommand
 from .delete_entity import DeleteEntityCommand
+from .activation_entity import ActivationEntityCommand

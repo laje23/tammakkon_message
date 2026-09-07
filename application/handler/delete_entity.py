@@ -1,6 +1,6 @@
 from domain.interfaces import IUnitOfWork, IEventBus
 from application.commands import DeleteEntityCommand
-from application.events import EntityCreatedEvent
+from application.events import EntityDeletedEvent
 from domain.exeptions import OperationFailedError
 
 
@@ -16,5 +16,5 @@ class DeleteEntityHandler:
             repo.delete(command.entity_id)
 
         self.event_bus.publish(
-            EntityCreatedEvent(command.entity_id, command.entity_class.__name__, self.__class__.__name__)
+            EntityDeletedEvent(command.entity_id, command.entity_class.__name__, self.__class__.__name__)
         )
