@@ -1,35 +1,33 @@
 from domain.entities import BotAccount
-from domain.repositories import IBotAccountRepository
-from domain.types import PlatformType
-from domain.interfaces import IHashService, IUnitOfWork, ILogger
-
+from domain.interfaces import IHashService, IUnitOfWork , IEventBus
+from domain.events import EntityActivatedEvent , EntityDeactivatedEvent
 
 class activationBotAccountUseCase:
 
     def __init__(
         self,
-        repository: IBotAccountRepository,
         hash_service: IHashService,
         uow: IUnitOfWork,
-        logger: ILogger,
+        event_bus : IEventBus
     ) -> None:
-        self.repo = repository
         self.hash_service = hash_service
         self.uow = uow
-        self.logger = logger
+        self.event_bus = event_bus
 
     def activate(self, entity: BotAccount):
         entity.activate()
 
         with self.uow as uow:
             uow.bot_account.update(entity)
-
-        self.logger.log(
-            "bout_account activated",
-            self.logger.category.AUTH,
-            self.logger.level.INFO,
-            self.__class__.__name__,
+            
+        self.event_bus.publish(
+            EntityActivatedEvent(
+                entity.__class__.__name__,
+                entity.id if entity.id else 0,
+                f"application/usecase : {self.__class__.__name__}"
+            )
         )
+
 
     def deactivate(self, entity: BotAccount):
         entity.deactivate()
@@ -37,9 +35,11 @@ class activationBotAccountUseCase:
         with self.uow as uow:
             uow.bot_account.update(entity)
 
-        self.logger.log(
-            "bout_account deactivated",
-            self.logger.category.AUTH,
-            self.logger.level.INFO,
-            self.__class__.__name__,
+
+        self.event_bus.publish(
+            EntityDeactivatedEvent(
+                entity.__class__.__name__,
+                entity.id if entity.id else 0,
+                f"application/usecase : {self.__class__.__name__}"
+            )
         )

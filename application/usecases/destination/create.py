@@ -1,17 +1,17 @@
 from domain.entities import Destination
-from domain.interfaces import IUnitOfWork, ILogger
+from domain.interfaces import IUnitOfWork , IEventBus
 from domain.types import DestinationType
-
+from domain.events import EntityCreatedEvent
 
 class CreateDestinationUseCase:
 
     def __init__(
         self,
         uow: IUnitOfWork,
-        logger: ILogger,
+        event_bus : IEventBus
     ) -> None:
-        self.logger = logger
         self.uow = uow
+        self.event_bus = event_bus
 
     def execute(
         self,
@@ -25,9 +25,10 @@ class CreateDestinationUseCase:
         with self.uow as uow:
             uow.destination.create(destination)
 
-        self.logger.log(
-            f"destination {name} created",
-            self.logger.category.AUTH,
-            self.logger.level.INFO,
-            self.__class__.__name__,
+        self.event_bus.publish(
+            EntityCreatedEvent(
+                destination.__class__.__name__,
+                destination.name ,
+                f"application/usecase : {self.__class__.__name__}"
+            )
         )

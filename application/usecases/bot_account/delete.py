@@ -1,25 +1,28 @@
-from domain.entities import BotAccount
-from domain.repositories import IBotAccountRepository
-from domain.interfaces import IUnitOfWork, ILogger
-
+from domain.interfaces import IUnitOfWork, ILogger , IEventBus
+from domain.events import  EntityDeletedEvent
+from domain.exeptions import InvalidStateError
 
 class DeleteBotAccountUseCase:
 
     def __init__(
-        self, repository: IBotAccountRepository, uow: IUnitOfWork, logger: ILogger
+        self, uow: IUnitOfWork, logger: ILogger , event_bus : IEventBus
     ) -> None:
-        self.repo = repository
         self.uow = uow
         self.logger = logger
+        self.event_bus = event_bus
 
     def execute(self, bot_account_id: int):
 
         with self.uow as uow:
+            entity=uow.bot_account.get_by_id(bot_account_id)
+            if not entity : 
+                raise InvalidStateError("entity not in database")
             uow.bot_account.delete(bot_account_id)
 
-        self.logger.log(
-            f"bout_account with id {bot_account_id} deleted",
-            self.logger.category.AUTH,
-            self.logger.level.INFO,
-            self.__class__.__name__,
+        self.event_bus.publish(
+            EntityDeletedEvent(
+                entity.__class__.__name__,
+                bot_account_id,
+                f"application/usecase : {self.__class__.__name__}"
+            )
         )
