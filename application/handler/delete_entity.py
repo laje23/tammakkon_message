@@ -1,6 +1,6 @@
 from domain.interfaces import IUnitOfWork, IEventBus
-from application.commands import DeleteEntityCommand
-from application.events import EntityDeletedEvent
+from domain.commands import DeleteEntityCommand
+from domain.events import EntityDeletedEvent
 from domain.exeptions import OperationFailedError
 
 

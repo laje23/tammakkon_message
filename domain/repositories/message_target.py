@@ -3,4 +3,8 @@ from domain.repositories import IBaseRepository
 from domain.entities import MessageTarget
 
 
-class IMessageTargetRepository(IBaseRepository[MessageTarget]): ...
+class IMessageTargetRepository(IBaseRepository[MessageTarget]):
+
+    @abstractmethod
+    def get_due(self)->list[MessageTarget]:
+        ...

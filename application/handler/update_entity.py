@@ -1,6 +1,6 @@
 from domain.interfaces import IUnitOfWork, IEventBus
-from application.commands import UpdateEntityCommand
-from application.events import EntityUpdatedEvent
+from domain.commands import UpdateEntityCommand
+from domain.events import EntityUpdatedEvent
 from domain.exeptions import OperationFailedError
 
 

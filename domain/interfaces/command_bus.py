@@ -2,10 +2,10 @@ from typing import Any
 from abc import ABC, abstractmethod
 
 
-class IEventBus(ABC):
+class ICommandBus(ABC):
 
     @abstractmethod
-    def register(self, event_type: type, listener: Any) -> None: ...
+    def register(self, command_type: type, handler: Any) -> None: ...
 
     @abstractmethod
-    def publish(self, event: Any) -> None: ...
+    def publish(self, command: Any) -> None: ...

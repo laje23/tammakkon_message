@@ -1,11 +1,13 @@
 from domain.exeptions import ValidationError, NotFoundError
 from infrastructure.database.repository import SQLAlchemyRepository
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session  
+from sqlalchemy import select , and_
 from infrastructure.database.models import MessageTargetModel
 from domain.entities import MessageTarget
 from infrastructure.database.mappers import MessageTargetMapper
 from domain.repositories import IMessageTargetRepository
-
+from datetime import datetime
+from domain.types import MessageTargetStatusType
 
 class MessageTargetRepository(
     SQLAlchemyRepository[MessageTargetModel], IMessageTargetRepository
@@ -52,4 +54,15 @@ class MessageTargetRepository(
             for model in models:
                 entities.append(self.mapper.to_entity(model))
 
+        return entities
+    
+    def get_due(self) -> list[MessageTarget]:
+        query = select(self.model).where(and_(self.model.send_at <= datetime.now() ,self.model.status == MessageTargetStatusType.PENDING))
+        models = self.session.execute(query).scalars().all()
+        
+        entities = []
+        if models:
+
+            for model in models:
+                entities.append(self.mapper.to_entity(model))
         return entities

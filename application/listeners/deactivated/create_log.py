@@ -1,4 +1,4 @@
-from application.events import EntityCreatedEvent
+from domain.events import EntityCreatedEvent
 from domain.interfaces import ILogger
 
 
