@@ -5,6 +5,6 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class EntityCreatedEvent:
-    entity: object
+    entity_id: int
     entity_class_name: str
     source: str
