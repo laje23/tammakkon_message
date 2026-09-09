@@ -1,1 +1,1 @@
-from .create_log import CreateLogListener
+from .create_log import CreateDeletedLogListener
