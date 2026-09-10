@@ -1,2 +1,2 @@
 from .proccess_send_message import ProcessSendMessagesHandler
-from .send_message import ProcessSendMessagesHandler
+from .send_message import SendMessagesHandler

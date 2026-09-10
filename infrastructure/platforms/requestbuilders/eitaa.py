@@ -24,7 +24,7 @@ class EitaaPlatform:
         self,
         token : str ,
         file: bytes,
-        chat_id: int,
+        chat_id: str,
         filename: str,
         caption: str = "",
         mime_type: str | None = None,
@@ -56,7 +56,7 @@ class EitaaPlatform:
         self,
         token : str ,
         photo: bytes,
-        chat_id: int,
+        chat_id: str,
         file_name :str = "aname",
         caption: str = "",
     ):
@@ -73,7 +73,7 @@ class EitaaPlatform:
         self,
         token : str ,
         audio: bytes,
-        chat_id: int,
+        chat_id: str,
         file_name :str = "",
         caption: str = "",
     ):
@@ -90,7 +90,7 @@ class EitaaPlatform:
         self,
         token : str ,
         video: bytes,
-        chat_id: int,
+        chat_id: str,
         file_name :str = "",
         caption: str = "",
     ):
@@ -108,7 +108,7 @@ class EitaaPlatform:
         self,
         token : str ,
         document: bytes,
-        chat_id: int,
+        chat_id: str,
         file_name :str = "",
         caption: str = "",
     ):

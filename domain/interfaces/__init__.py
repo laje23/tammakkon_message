@@ -2,4 +2,8 @@ from .command_bus import ICommandBus
 from .event_bus import IEventBus
 from .hash_service import IHashService
 from .log_service import ILogger
+from .send_app_service import ISender
 from .unit_of_work import IUnitOfWork
+from .get_platform import IGetPlatform
+from .read_media import IReadMedia
+from .encription_service import IEncription

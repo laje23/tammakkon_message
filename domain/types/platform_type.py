@@ -5,3 +5,4 @@ class PlatformType(Enum):
     BALE = "bale"
     EITAA = "eitaa"
     TELEGRAM = "telegram"
+    ROBIKA = "robika"

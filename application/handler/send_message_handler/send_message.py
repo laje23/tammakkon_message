@@ -1,43 +1,51 @@
-from domain.interfaces import IUnitOfWork, ICommandBus
-from domain.commands import ProcessSendMessagesCommand , SendMessagesCommand
+from domain.interfaces import IUnitOfWork, IEventBus , IGetPlatform , IReadMedia , IEncription
+from domain.commands import  SendMessagesCommand
 from domain.exeptions import OperationFailedError
-
-
-class ProcessSendMessagesHandler:
-    def __init__(self, unit_of_work: IUnitOfWork, command_bus: ICommandBus) -> None:
+from domain.types import MessageType
+class SendMessagesHandler:
+    
+    def __init__(self, unit_of_work: IUnitOfWork, event_bus: IEventBus , get_platform : IGetPlatform , media_reader : IReadMedia , encriper:IEncription) -> None:
         self.unit_of_work = unit_of_work
-        self.command_bus = command_bus
+        self.event_bus = event_bus
+        self.get_platform = get_platform
+        self.media_reader = media_reader
+        self.encriper = encriper
 
 
 
-    def handle(self, command:ProcessSendMessagesCommand):
-        message_torgets = command.message_targets
-        for message_target in message_torgets:
-            with self.unit_of_work as uow :
-                message=uow.Message.get_by_id(message_target.message_id)
-                
-                destination=uow.Destination.get_by_id(message_target.destination_id)
-                
-                if message is None or destination is None :
-                    raise OperationFailedError("message or destination is None")
-                
-                if destination.bot_account_id is None :
-                    raise OperationFailedError("destination.bot_account_id is None")
-                
-                bot = uow.BotAccount.get_by_id(destination.bot_account_id)
-                if bot is None:
-                    raise OperationFailedError("bot is None")
-                
-                publish_command = SendMessagesCommand(
-                    platform=bot.platform ,
-                    chat_external_id=destination.external_id ,
-                    message_type=message.type,
-                    text= message.text,
-                    medi_id=message.media_id
-                    )
-                
-                
-            self.command_bus.publish(
-                publish_command
-            )
+
+    def get_media(self , media_id)-> bytes:
+        with self.unit_of_work as uow :
+            media = uow.Media.get_by_id(media_id)
+            if media :
+                return self.media_reader.read(media.stored_name)
+            else :
+                raise OperationFailedError("reading media file faild")
+
+
+    def handle(self, command:SendMessagesCommand):
+        
+        platform =self.get_platform.get_platform(command.platform)
+        method_dict ={
+            MessageType.TEXT : platform.send_text,
+            MessageType.PHOTO : platform.send_photo,
+            MessageType.AUDIO : platform.send_audio,
+            MessageType.VIDEO : platform.send_video,
+            MessageType.DOCUMENT:platform.send_document
+        }
+        if command.media_id:
+            file =self.get_media(command.media_id)
+        else : 
+            file = None 
+        
+        
+        method = method_dict[command.message_type]
+
+        method(
+            chat_id=command.chat_external_id,
+            token=self.encriper.decrip(command.token) ,
+            caption=command.text,
+            file=file
+        )
             
+        

@@ -21,14 +21,14 @@ class RobikaPlatform:
         
         return {"url":url}
 
-    def send_text(self, token : str ,text:str="سلام" , chat_id:str = "g0IX6ZH09d838e0c6c41721ff6b777f8"):
+    def send_text(self, token : str ,text:str , chat_id:str ):
         url = self.create_url(token, "sendMessage")
         
         data = {"chat_id":chat_id , "text":text}
         
         return{"json":data , "url":url}
 
-    def send_file(self,token:str ,file_id, chat_id:str="g0IX6ZH09d838e0c6c41721ff6b777f8", caption:str =""):
+    def send_file(self,token:str ,file_id, chat_id:str, caption:str =""):
         url = self.create_url(token , "sendFile")
         
         data = {
@@ -37,6 +37,7 @@ class RobikaPlatform:
             "text":caption
         }
         return {"url":url , "json":data}
+    
         
     
     def request_send_file(self , token ,mimetype):
