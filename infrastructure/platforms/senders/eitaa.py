@@ -1,14 +1,12 @@
 from infrastructure.platforms.requestbuilders import EitaaPlatform
 from domain.interfaces import ISender
-import httpx 
+from  infrastructure.platforms.send_method import send_post
 
 
 class EitaaSender(ISender):
     Platform = EitaaPlatform()
     def _send_post(self , data: dict)-> dict:
-        response =httpx.post(**data)
-        response.raise_for_status()
-        return response.json()
+        return send_post(data=data)
     
     def _check_send(self , response_data)->bool:
         if response_data["ok"]is "True" or response_data["ok"]:

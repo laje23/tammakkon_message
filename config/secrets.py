@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-class Settings:
+class Secrets:
 
     @property
     def database_url(self) -> str:
@@ -39,4 +39,4 @@ class Settings:
         if not value:
             raise RuntimeError("BOT_TOKEN is not set")
         return value
-settings = Settings()
+secrets = Secrets()

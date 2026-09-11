@@ -1,12 +1,9 @@
 import mimetypes
-
+from config.platform import robika_setting
 
 class RobikaPlatform:
 
-    timeout = 20
-    limit_file_size = 50_000
-
-    base_url = "https://botapi.rubika.ir/v3/<token>/<method>"
+    base_url = robika_setting.base_url
 
 
     def create_url(self, token: str, method: str) -> str:

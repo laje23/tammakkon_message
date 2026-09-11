@@ -1,11 +1,11 @@
-from config.setting import settings
+from config.secrets import secrets
 from cryptography.fernet import Fernet
 
 
 class EncryptionService:
 
     def __init__(self):
-        key = settings.encriptio_key
+        key = secrets.encriptio_key
         if not key:
             raise RuntimeError("ENCRYPTION_KEY is not set")
         self.fernet = Fernet(key.encode())

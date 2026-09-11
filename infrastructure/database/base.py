@@ -1,9 +1,11 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker , mapped_column , Mapped
-from config.setting import settings
+from config import secrets
+
+
 
 engine = create_engine(
-    settings.DATABASE_URL if settings.DATABASE_URL else "", echo=True
+        secrets.database_url , echo=True
 )
 
 sessionlocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)

@@ -1,1 +1,1 @@
-from .setting import Settings
+from .secrets import Secrets

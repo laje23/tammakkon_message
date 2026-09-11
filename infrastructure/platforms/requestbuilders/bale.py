@@ -1,14 +1,11 @@
 import mimetypes
-
+from config.platform import bale_setting
 
 class BalePlatform:
-
-    timeout = 20
-    limit_file_size = 50_000
     
     
     
-    base_url = "https://tapi.bale.ai/bot<token>/<method>"
+    base_url =bale_setting.base_url
     
     def create_url(self, token: str, method: str) -> str:
         return (

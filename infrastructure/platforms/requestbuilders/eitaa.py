@@ -1,10 +1,8 @@
 import mimetypes
+from config.platform import eitaa_setting
 
 class EitaaPlatform:
-    base_url = "https://eitaayar.ir/api/<token>/<method>"
-    token = "bot397007:d69c18d7-a0dc-484d-834d-52ddf779c69a"
-    
-    
+    base_url=eitaa_setting.base_url
     
     def create_url(self, token , method):
         url = self.base_url.replace("<token>", token).replace("<method>", method)
