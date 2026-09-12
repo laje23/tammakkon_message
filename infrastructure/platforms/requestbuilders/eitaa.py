@@ -1,26 +1,25 @@
 import mimetypes
 from config.platform import eitaa_setting
 
+
 class EitaaPlatform:
-    base_url=eitaa_setting.base_url
-    
-    def create_url(self, token , method):
+    base_url = eitaa_setting.base_url
+
+    def create_url(self, token, method):
         url = self.base_url.replace("<token>", token).replace("<method>", method)
-    
+
         return url
-    
-    def send_text(self, token :str ,text:str="سلام" , chat_id:str = ""):
+
+    def send_text(self, token: str, text: str = "سلام", chat_id: str = ""):
         url = self.create_url(token, "sendMessage")
-        
-        data = {"chat_id":chat_id , "text":text}
-        
-        return{"data":data , "url":url}
-        
-    
+
+        data = {"chat_id": chat_id, "text": text}
+
+        return {"data": data, "url": url}
 
     def _send_media(
         self,
-        token : str ,
+        token: str,
         file: bytes,
         chat_id: str,
         filename: str,
@@ -30,9 +29,7 @@ class EitaaPlatform:
         url = self.create_url(token, "sendFile")
 
         mime_type = (
-            mime_type
-            or mimetypes.guess_type(filename)[0]
-            or "application/octet-stream"
+            mime_type or mimetypes.guess_type(filename)[0] or "application/octet-stream"
         )
 
         return {
@@ -52,70 +49,68 @@ class EitaaPlatform:
 
     def send_photo(
         self,
-        token : str ,
+        token: str,
         photo: bytes,
         chat_id: str,
-        file_name :str = "aname",
+        file_name: str = "aname",
         caption: str = "",
     ):
         return self._send_media(
             file=photo,
-            token= token , 
+            token=token,
             chat_id=chat_id,
             filename=file_name,
             caption=caption,
             mime_type="image/jpeg",
         )
-        
+
     def send_audio(
         self,
-        token : str ,
+        token: str,
         audio: bytes,
         chat_id: str,
-        file_name :str = "",
+        file_name: str = "",
         caption: str = "",
     ):
         return self._send_media(
             file=audio,
-            token= token , 
+            token=token,
             chat_id=chat_id,
             filename=file_name,
             caption=caption,
             mime_type="audio/mp3",
         )
-        
+
     def send_video(
         self,
-        token : str ,
+        token: str,
         video: bytes,
         chat_id: str,
-        file_name :str = "",
+        file_name: str = "",
         caption: str = "",
     ):
         return self._send_media(
             file=video,
-            token= token , 
+            token=token,
             chat_id=chat_id,
             filename=file_name,
             caption=caption,
             mime_type="video/mp4",
         )
-    
-        
+
     def send_document(
         self,
-        token : str ,
+        token: str,
         document: bytes,
         chat_id: str,
-        file_name :str = "",
+        file_name: str = "",
         caption: str = "",
     ):
         return self._send_media(
-            token= token , 
+            token=token,
             file=document,
             chat_id=chat_id,
             filename=file_name,
             caption=caption,
             mime_type="document/pdf",
         )
-    

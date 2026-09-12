@@ -6,9 +6,10 @@ class EitaaSetting(PlatformSetting):
     active = True
 
     def activate(self):
-        self.active = True 
-    
+        self.active = True
+
     def deactivate(self):
-        self.active= False
-    
+        self.active = False
+
+
 eitaa_setting = EitaaSetting()

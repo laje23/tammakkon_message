@@ -21,7 +21,7 @@ class MessageRepository(SQLAlchemyRepository[MessageModel], IMessageRepository):
         model = self.mapper.to_model(entity)
         model = super().create(model)
 
-    def update(self, entity: Message)-> int :
+    def update(self, entity: Message) -> int:
         if not entity.id:
             raise ValidationError("entity id is empty")
 
@@ -35,7 +35,7 @@ class MessageRepository(SQLAlchemyRepository[MessageModel], IMessageRepository):
         self.session.flush()
         self.session.refresh(model)
         return model.id
-        
+
     def get_by_id(self, id: int) -> Message | None:
         model = super().get_by_id(id)
         if model:

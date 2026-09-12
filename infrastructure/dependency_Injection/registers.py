@@ -1,5 +1,5 @@
 from domain.interfaces import *
-from infrastructure.bus import * 
+from infrastructure.bus import *
 from application.service import *
 from infrastructure.dependency_Injection import container
 from infrastructure.database import UnitOfWork
@@ -24,4 +24,3 @@ def register_container():
     container.register(IEncription, encryption_service)
     container.register(IGetPlatform, platform_service)
     container.register(IReadMedia, media_reader)
-    

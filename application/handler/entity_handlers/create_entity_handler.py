@@ -21,5 +21,7 @@ class CreateEntityHandler:
             entity_id = repo.create(entity)
 
         self.event_bus.publish(
-            EntityCreatedEvent(entity_id, entity_class.__name__, self.__class__.__name__)
+            EntityCreatedEvent(
+                entity_id, entity_class.__name__, self.__class__.__name__
+            )
         )

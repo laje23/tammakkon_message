@@ -25,12 +25,9 @@ class Secrets:
 
         return value
 
-
     @property
     def debug(self) -> bool:
         return os.getenv("DEBUG", "False").lower() == "true"
-    
-
 
     @property
     def encriptio_key(self) -> str:
@@ -39,4 +36,6 @@ class Secrets:
         if not value:
             raise RuntimeError("BOT_TOKEN is not set")
         return value
+
+
 secrets = Secrets()

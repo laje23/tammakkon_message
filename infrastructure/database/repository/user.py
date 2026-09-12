@@ -21,7 +21,7 @@ class UserRepository(SQLAlchemyRepository[UserModel], IUserRepository):
         model = self.mapper.to_model(entity)
         model = super().create(model)
 
-    def update(self, entity: User)->int :
+    def update(self, entity: User) -> int:
         if not entity.id:
             raise ValidationError("entity id is empty")
 

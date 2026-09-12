@@ -31,7 +31,7 @@ class RoleRepository(SQLAlchemyRepository[RoleModel], IRoleRepository):
 
         return role
 
-    def update(self, entity: Role)-> int :
+    def update(self, entity: Role) -> int:
         if not entity.id:
             raise ValidationError("entity id is empty")
 

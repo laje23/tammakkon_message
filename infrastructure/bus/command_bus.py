@@ -26,9 +26,6 @@ class CommandBus(ICommandBus):
         handler = self._handlers.get(command_type)
 
         if handler is None:
-            raise ValueError(
-                f"No handler registered for "
-                f"{command_type.__name__}"
-            )
+            raise ValueError(f"No handler registered for " f"{command_type.__name__}")
 
         handler.handle(command)

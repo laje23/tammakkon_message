@@ -6,4 +6,4 @@ from dataclasses import dataclass
 @dataclass(frozen=True)
 class MessageSentEvent:
     entity_id: int
-    sent_time : datetime 
+    sent_time: datetime

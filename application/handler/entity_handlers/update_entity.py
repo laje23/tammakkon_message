@@ -21,5 +21,7 @@ class UpdateEntityHandler:
             entity_id = repo.update(entity)
 
         self.event_bus.publish(
-            EntityUpdatedEvent(entity_id, entity_class.__name__, self.__class__.__name__)
+            EntityUpdatedEvent(
+                entity_id, entity_class.__name__, self.__class__.__name__
+            )
         )

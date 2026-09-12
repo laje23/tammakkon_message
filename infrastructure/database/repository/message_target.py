@@ -1,13 +1,14 @@
 from domain.exeptions import ValidationError, NotFoundError
 from infrastructure.database.repository import SQLAlchemyRepository
-from sqlalchemy.orm import Session  
-from sqlalchemy import select , and_
+from sqlalchemy.orm import Session
+from sqlalchemy import select, and_
 from infrastructure.database.models import MessageTargetModel
 from domain.entities import MessageTarget
 from infrastructure.database.mappers import MessageTargetMapper
 from domain.repositories import IMessageTargetRepository
 from datetime import datetime
 from domain.types import MessageTargetStatusType
+
 
 class MessageTargetRepository(
     SQLAlchemyRepository[MessageTargetModel], IMessageTargetRepository
@@ -24,7 +25,7 @@ class MessageTargetRepository(
         model = self.mapper.to_model(entity)
         model = super().create(model)
 
-    def update(self, entity: MessageTarget)-> int :
+    def update(self, entity: MessageTarget) -> int:
         if not entity.id:
             raise ValidationError("entity id is empty")
 
@@ -38,7 +39,7 @@ class MessageTargetRepository(
         self.session.flush()
         self.session.refresh(model)
         return model.id
-    
+
     def get_by_id(self, id: int) -> MessageTarget | None:
         model = super().get_by_id(id)
         if model:
@@ -55,11 +56,16 @@ class MessageTargetRepository(
                 entities.append(self.mapper.to_entity(model))
 
         return entities
-    
+
     def get_due(self) -> list[MessageTarget]:
-        query = select(self.model).where(and_(self.model.send_at <= datetime.now() ,self.model.status == MessageTargetStatusType.PENDING))
+        query = select(self.model).where(
+            and_(
+                self.model.send_at <= datetime.now(),
+                self.model.status == MessageTargetStatusType.PENDING,
+            )
+        )
         models = self.session.execute(query).scalars().all()
-        
+
         entities = []
         if models:
 

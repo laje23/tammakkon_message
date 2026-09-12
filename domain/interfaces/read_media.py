@@ -1,10 +1,7 @@
-from abc import ABC , abstractmethod
-
+from abc import ABC, abstractmethod
 
 
 class IReadMedia(ABC):
-    
-    
+
     @abstractmethod
-    def read(self , storge_name:str)-> bytes:
-        ... 
+    def read(self, storge_name: str) -> bytes: ...

@@ -1,32 +1,26 @@
 import mimetypes
 from config.platform import bale_setting
 
+
 class BalePlatform:
-    
-    
-    
-    base_url =bale_setting.base_url
-    
+
+    base_url = bale_setting.base_url
+
     def create_url(self, token: str, method: str) -> str:
-        return (
-            self.base_url
-            .replace("<token>", token)
-            .replace("<method>", method)
-        )
-        
-        
-    def send_text(self, token,text:str="سلام" , chat_id:str = ""):
+        return self.base_url.replace("<token>", token).replace("<method>", method)
+
+    def send_text(self, token, text: str = "سلام", chat_id: str = ""):
         url = self.create_url(token, "sendMessage")
-        
-        data = {"chat_id":chat_id , "text":text}
-        
-        return{"json":data , "url":url}
+
+        data = {"chat_id": chat_id, "text": text}
+
+        return {"json": data, "url": url}
 
     def _send_media(
         self,
         *,
         method: str,
-        token:str ,
+        token: str,
         field_name: str,
         file: bytes,
         file_name: str,
@@ -61,7 +55,7 @@ class BalePlatform:
 
     def send_photo(
         self,
-        token:str ,
+        token: str,
         photo: bytes,
         file_name: str = "image.jpg",
         caption: str = "این یک عکس هست",
@@ -69,7 +63,7 @@ class BalePlatform:
     ):
         return self._send_media(
             method="sendphoto",
-            token = token ,
+            token=token,
             field_name="photo",
             file=photo,
             file_name=file_name,
@@ -80,7 +74,7 @@ class BalePlatform:
 
     def send_audio(
         self,
-        token:str ,
+        token: str,
         audio: bytes,
         file_name: str = "audio.mp3",
         caption: str = "این یک صدا هست",
@@ -88,7 +82,7 @@ class BalePlatform:
     ):
         return self._send_media(
             method="sendAudio",
-            token = token ,
+            token=token,
             field_name="audio",
             file=audio,
             file_name=file_name,
@@ -99,7 +93,7 @@ class BalePlatform:
 
     def send_video(
         self,
-        token :str ,
+        token: str,
         video: bytes,
         file_name: str = "video.mp4",
         caption: str = "این یک ویدیو هست",
@@ -107,7 +101,7 @@ class BalePlatform:
     ):
         return self._send_media(
             method="sendvideo",
-            token = token ,
+            token=token,
             field_name="video",
             file=video,
             file_name=file_name,
@@ -118,7 +112,7 @@ class BalePlatform:
 
     def send_document(
         self,
-        token :str ,
+        token: str,
         document: bytes,
         file_name: str = "document.pdf",
         caption: str = "این یک فایل هست",
@@ -126,7 +120,7 @@ class BalePlatform:
     ):
         return self._send_media(
             method="senddocument",
-            token = token ,
+            token=token,
             field_name="document",
             file=document,
             file_name=file_name,
@@ -137,7 +131,7 @@ class BalePlatform:
 
     def send_voice(
         self,
-        token :str ,
+        token: str,
         voice: bytes,
         file_name: str = "voice.mp3",
         caption: str = "این یک فایل هست",
@@ -145,7 +139,7 @@ class BalePlatform:
     ):
         return self._send_media(
             method="sendVoice",
-            token = token ,
+            token=token,
             field_name="voice",
             file=voice,
             file_name=file_name,

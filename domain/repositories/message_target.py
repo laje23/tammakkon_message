@@ -6,5 +6,4 @@ from domain.entities import MessageTarget
 class IMessageTargetRepository(IBaseRepository[MessageTarget]):
 
     @abstractmethod
-    def get_due(self)->list[MessageTarget]:
-        ...
+    def get_due(self) -> list[MessageTarget]: ...

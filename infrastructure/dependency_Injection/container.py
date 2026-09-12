@@ -8,5 +8,6 @@ class _Container:
 
     def resolve(self, interface):
         return self._dependencies[interface]
-    
+
+
 container = _Container()

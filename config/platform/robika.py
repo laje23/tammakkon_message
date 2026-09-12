@@ -3,12 +3,13 @@ from config.platform.platform_setting import PlatformSetting
 
 class RobikaSetting(PlatformSetting):
     base_url = "https://botapi.rubika.ir/v3/<token>/<method>"
-    active = True 
-    
+    active = True
+
     def activate(self):
-        self.active = True 
-    
+        self.active = True
+
     def deactivate(self):
-        self.active= False
-    
+        self.active = False
+
+
 robika_setting = RobikaSetting()
