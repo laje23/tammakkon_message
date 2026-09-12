@@ -1,5 +1,5 @@
 from domain.interfaces import IUnitOfWork , ICommandBus
-from domain.commands import SendMessagesCommand
+from domain.commands import ProcessSendMessagesCommand
 
 class ProccessCron:
     def __init__(self , unit_of_work : IUnitOfWork , command_bus : ICommandBus) -> None:
@@ -9,8 +9,8 @@ class ProccessCron:
     
     def send_command(self, entities)->None:
         self.command_bus.publish(
-            SendMessagesCommand(
-                message_targets=entities
+            ProcessSendMessagesCommand(
+                message_targets=entities,
             )
         )
     

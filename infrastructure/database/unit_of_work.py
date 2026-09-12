@@ -1,9 +1,8 @@
 from infrastructure.database.base import sessionlocal
 from infrastructure.database.repository import *
 from domain.exeptions import DataBaseError
-
-
-class UnitOfWork:
+from domain.interfaces import IUnitOfWork
+class UnitOfWork(IUnitOfWork):
 
     def __init__(self):
         self.users: UserRepository | None = None
