@@ -30,6 +30,7 @@ class ProcessSendMessagesHandler:
                 
                 publish_command = SendMessagesCommand(
                     platform=bot.platform ,
+                    message_id= message_target.message_id ,
                     chat_external_id=destination.external_id ,
                     message_type=message.type,
                     token = bot.token ,

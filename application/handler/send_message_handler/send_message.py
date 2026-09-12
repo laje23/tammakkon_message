@@ -1,7 +1,12 @@
 from domain.interfaces import IUnitOfWork, IEventBus , IGetPlatform , IReadMedia , IEncription
 from domain.commands import  SendMessagesCommand
+from domain.events import MessageSentEvent
 from domain.exeptions import OperationFailedError
 from domain.types import MessageType
+from datetime import datetime
+
+
+
 class SendMessagesHandler:
     
     def __init__(self, unit_of_work: IUnitOfWork, event_bus: IEventBus , get_platform : IGetPlatform , media_reader : IReadMedia , encriper:IEncription) -> None:
@@ -47,5 +52,11 @@ class SendMessagesHandler:
             caption=command.text,
             file=file
         )
-            
+        
+        self.event_bus.publish(
+            MessageSentEvent(
+                command.message_id ,
+                datetime.now()
+            )
+        ) 
         
