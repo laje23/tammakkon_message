@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-class Secrets:
+class _Secrets:
 
     @property
     def database_url(self) -> str:
@@ -37,4 +37,4 @@ class Secrets:
         return value
 
 
-secrets = Secrets()
+secrets = _Secrets()

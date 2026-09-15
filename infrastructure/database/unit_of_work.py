@@ -1,4 +1,4 @@
-from infrastructure.database.base import sessionlocal
+from infrastructure.database.base import sessionlocal , BaseModel , engine
 from infrastructure.database.repository import *
 from domain.exeptions import DataBaseError
 from domain.interfaces import IUnitOfWork
@@ -7,8 +7,8 @@ from domain.interfaces import IUnitOfWork
 class UnitOfWork(IUnitOfWork):
 
     def __init__(self):
-        self.users: UserRepository | None = None
-
+        BaseModel.metadata.create_all(bind=engine)
+        
     def __enter__(self):
         self.session = sessionlocal()
 
@@ -19,63 +19,63 @@ class UnitOfWork(IUnitOfWork):
 
     @property
     def User(self):
-        if self._users is None and self.session is not None:
+        if self.session :
             self._users = UserRepository(self.session)
 
         return self._users
 
     @property
     def Role(self) -> RoleRepository:
-        if self._role is None and self.session is not None:
+        if self.session :
             self._role = RoleRepository(self.session)
 
         return self._role
 
     @property
     def BotAccount(self) -> BotAccountRepository:
-        if self._bot_account is None and self.session is not None:
+        if self.session :
             self._bot_account = BotAccountRepository(self.session)
 
         return self._bot_account
 
     @property
     def Destination(self) -> DestinationRepository:
-        if self._destination is None and self.session is not None:
+        if self.session :
             self._destination = DestinationRepository(self.session)
 
         return self._destination
 
     @property
     def log(self) -> LogRepository:
-        if self._log is None and self.session is not None:
+        if self.session :
             self._log = LogRepository(self.session)
 
         return self._log
 
     @property
     def Message(self) -> MessageRepository:
-        if self._message is None and self.session is not None:
+        if self.session :
             self._message = MessageRepository(self.session)
 
         return self._message
 
     @property
     def Media(self) -> MediaRepository:
-        if self._media is None and self.session is not None:
+        if self.session :
             self._media = MediaRepository(self.session)
 
         return self._media
 
     @property
     def UserAccount(self) -> UserAccountRepository:
-        if self._user_account is None and self.session is not None:
+        if self.session :
             self._user_account = UserAccountRepository(self.session)
 
         return self._user_account
 
     @property
     def MessageTarget(self) -> MessageTargetRepository:
-        if self._message_target is None and self.session is not None:
+        if self.session :
             self._message_target = MessageTargetRepository(self.session)
 
         return self._message_target
@@ -84,8 +84,11 @@ class UnitOfWork(IUnitOfWork):
         if self.session:
             if exc_type is not None:
                 self.session.rollback()
+                print (exc_value)
+                print (traceback)
+                print (exc_type)
                 raise DataBaseError(
-                    "an error in databas", {"type": exc_type, "error": exc_value}
+                    exc_value , traceback , 
                 )
             else:
                 self.session.commit()

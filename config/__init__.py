@@ -1,1 +1,1 @@
-from .secrets import Secrets
+from .secrets import secrets

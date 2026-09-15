@@ -1,4 +1,4 @@
-from domain.interfaces import ISender
+from domain.interfaces.send_app_service import ISender
 from abc import ABC, abstractmethod
 from domain.types import PlatformType
 

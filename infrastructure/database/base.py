@@ -6,7 +6,6 @@ engine = create_engine(secrets.database_url, echo=True)
 
 sessionlocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 
-
 class Base(DeclarativeBase):
     pass
 
