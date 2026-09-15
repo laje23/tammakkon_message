@@ -1,10 +1,10 @@
 import mimetypes
-from config.platform import robika_setting
+from config.platform import RobikaSetting
 
 
 class RobikaPlatform:
 
-    base_url = robika_setting.base_url
+    base_url = RobikaSetting.base_url
 
     def create_url(self, token: str, method: str) -> str:
         return self.base_url.replace("<token>", token).replace("<method>", method)

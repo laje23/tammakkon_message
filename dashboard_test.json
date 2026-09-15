@@ -1,0 +1,96 @@
+{
+    "messages": {
+        "2026-08-22": {
+            "message_count": 120,
+            "text_message": 80,
+            "photo_message": 20,
+            "audio_message": 8,
+            "video_message": 7,
+            "document_message": 5
+        },
+        "2026-08-29": {
+            "message_count": 175,
+            "text_message": 105,
+            "photo_message": 30,
+            "audio_message": 15,
+            "video_message": 15,
+            "document_message": 10
+        },
+        "2026-09-05": {
+            "message_count": 230,
+            "text_message": 140,
+            "photo_message": 45,
+            "audio_message": 18,
+            "video_message": 17,
+            "document_message": 10
+        },
+        "2026-09-12": {
+            "message_count": 195,
+            "text_message": 115,
+            "photo_message": 38,
+            "audio_message": 16,
+            "video_message": 14,
+            "document_message": 12
+        },
+        "2026-09-19": {
+            "message_count": 280,
+            "text_message": 165,
+            "photo_message": 55,
+            "audio_message": 20,
+            "video_message": 25,
+            "document_message": 15
+        },
+        "2026-09-26": {
+            "message_count": 310,
+            "text_message": 185,
+            "photo_message": 62,
+            "audio_message": 22,
+            "video_message": 26,
+            "document_message": 15
+        }
+    },
+    "destinations": {
+        "2026-08-22": {
+            "count": 35,
+            "group": 12,
+            "channel": 8,
+            "super_group": 6,
+            "private": 9
+        },
+        "2026-08-29": {
+            "count": 42,
+            "group": 15,
+            "channel": 10,
+            "super_group": 7,
+            "private": 10
+        },
+        "2026-09-05": {
+            "count": 50,
+            "group": 18,
+            "channel": 12,
+            "super_group": 9,
+            "private": 11
+        },
+        "2026-09-12": {
+            "count": 57,
+            "group": 20,
+            "channel": 14,
+            "super_group": 10,
+            "private": 13
+        },
+        "2026-09-19": {
+            "count": 64,
+            "group": 23,
+            "channel": 16,
+            "super_group": 11,
+            "private": 14
+        },
+        "2026-09-26": {
+            "count": 72,
+            "group": 26,
+            "channel": 18,
+            "super_group": 12,
+            "private": 16
+        }
+    }
+}

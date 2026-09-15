@@ -10,7 +10,7 @@ class RobikaSender(ISender):
         return send_post(data=data)
 
     def _check_send(self, response_data) -> bool:
-        if response_data["ok"] is "True" or response_data["ok"]:
+        if response_data["ok"] is "True" or response_data["ok"] is True:
             return True
         else:
             return False

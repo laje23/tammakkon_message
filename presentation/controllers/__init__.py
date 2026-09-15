@@ -1,1 +1,1 @@
-from .dushbourd import DashboardController
+from .dashbourd import DashboardController

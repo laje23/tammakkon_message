@@ -1,9 +1,9 @@
 import mimetypes
-from config.platform import eitaa_setting
+from config.platform import EitaaSetting
 
 
 class EitaaPlatform:
-    base_url = eitaa_setting.base_url
+    base_url = EitaaSetting.base_url
 
     def create_url(self, token, method):
         url = self.base_url.replace("<token>", token).replace("<method>", method)

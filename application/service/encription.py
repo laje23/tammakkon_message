@@ -3,7 +3,7 @@ from cryptography.fernet import Fernet
 from domain.interfaces import IEncription
 
 
-class EncryptionService(IEncription ):
+class EncryptionService(IEncription):
 
     def __init__(self):
         key = secrets.encriptio_key

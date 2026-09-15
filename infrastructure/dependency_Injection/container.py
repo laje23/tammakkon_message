@@ -14,7 +14,7 @@ class _Container:
     _event_bus: IEventBus | None = None
     _hash_service: IHashService | None = None
     _encryption_service: IEncription | None = None
-    _get_platform: IGetPlatform | None = None  
+    _get_platform: IGetPlatform | None = None
     _media_reader: IReadMedia | None = None
 
     @property
@@ -65,7 +65,7 @@ class _Container:
             self._encryption_service = EncryptionService()
 
         return self._encryption_service
-    
+
     @property
     def get_platform_service(self) -> IGetPlatform:
         if self._get_platform is None:

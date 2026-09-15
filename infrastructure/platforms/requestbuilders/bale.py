@@ -1,10 +1,10 @@
 import mimetypes
-from config.platform import bale_setting
+from config.platform import BaleSetting
 
 
 class BalePlatform:
 
-    base_url = bale_setting.base_url
+    base_url = BaleSetting.base_url
 
     def create_url(self, token: str, method: str) -> str:
         return self.base_url.replace("<token>", token).replace("<method>", method)

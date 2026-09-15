@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from presentation.controllers import *
+
 app = FastAPI()
 
 
@@ -55,6 +56,21 @@ async def login(data: LoginRequest):
         "message": "نام کاربری یا رمز عبور اشتباه است.",
     }
 
+
+# @app.get("/dashboard")
+# async def dashboard():
+#     return DashboardController().get_datas()
+
+import json
+from pathlib import Path
+
+
 @app.get("/dashboard")
 async def dashboard():
-    return DashboardController().get_datas()
+
+    path = Path("dashboard_test.json")
+
+    with path.open("r", encoding="utf-8") as file:
+        data = json.load(file)
+
+    return data
