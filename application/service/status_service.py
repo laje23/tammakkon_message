@@ -2,13 +2,13 @@ from datetime import date, timedelta
 from typing import Sequence, TypeVar
 
 from domain.base import AppEntity
-from domain.interfaces import IUnitOfWork
+from domain.interfaces import IUnitOfWork , IStatisticsService
 
 
 EntityT = TypeVar("EntityT", bound=AppEntity)
 
 
-class StatisticsService:
+class StatisticsService(IStatisticsService):
 
     def __init__(self, unit_of_work: IUnitOfWork) -> None:
         self.unit_of_work = unit_of_work
@@ -113,3 +113,18 @@ class StatisticsService:
             }
 
         return result
+
+    def get_dashboard_data(self) -> dict:
+        messages = self.message_status()
+        destinations = self.destination_status()
+
+        return {
+            "messages": {
+                week_date.isoformat(): data
+                for week_date, data in messages.items()
+            },
+            "destinations": {
+                week_date.isoformat(): data
+                for week_date, data in destinations.items()
+            },
+        }

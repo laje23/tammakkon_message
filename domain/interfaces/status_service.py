@@ -16,3 +16,7 @@ class IStatisticsService(ABC):
     @abstractmethod
     def destination_status(self) -> dict[date, dict[str, int]]:
         ...
+    
+    @abstractmethod
+    def get_dashboard_data(self)->dict:
+        ... 

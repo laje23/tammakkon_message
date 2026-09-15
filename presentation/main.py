@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-
+from presentation.controllers import *
 app = FastAPI()
 
 
@@ -54,3 +54,7 @@ async def login(data: LoginRequest):
         "success": False,
         "message": "نام کاربری یا رمز عبور اشتباه است.",
     }
+
+@app.get("/dashboard")
+async def dashboard():
+    return DashboardController().get_datas()
