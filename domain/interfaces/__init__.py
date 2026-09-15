@@ -7,3 +7,4 @@ from .log_service import ILogger
 from .read_media import IReadMedia
 from .send_app_service import ISender
 from .unit_of_work import IUnitOfWork
+from .status_service import IStatisticsService
