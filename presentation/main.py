@@ -2,7 +2,6 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-
 app = FastAPI()
 
 
@@ -26,6 +25,7 @@ app.add_middleware(
 # Schemas
 # =========================
 
+
 class LoginRequest(BaseModel):
     username: str
     password: str
@@ -35,11 +35,10 @@ class LoginRequest(BaseModel):
 # Routes
 # =========================
 
+
 @app.get("/")
 async def root():
-    return {
-        "message": "Backend is running"
-    }
+    return {"message": "Backend is running"}
 
 
 @app.post("/login")
