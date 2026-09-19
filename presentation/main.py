@@ -1,8 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-
-from presentation.controllers import authenticate 
+from presentation.controllers import *
 
 
 app = FastAPI()
@@ -32,6 +31,11 @@ class LoginRequest(BaseModel):
     username: str
     password: str
 
+class UpdateBotRequest(BaseModel):
+    name: str
+    platform: str
+    is_active: bool
+    token: str | None = None
 
 # =========================
 # Routes
@@ -59,10 +63,24 @@ from pathlib import Path
 
 @app.get("/dashboard")
 async def dashboard():
-
-    path = Path("dashboard_test.json")
-
-    with path.open("r", encoding="utf-8") as file:
-        data = json.load(file)
+    data = DashboardController().get_datas()
 
     return data
+
+
+@app.get("/bot")
+async def get_bots():
+    return BotAccountController().get_all_bots()
+
+
+@app.get("/bot/{id}")
+async def get_bot(id: int):
+    return BotAccountController().get_bot_account_by_id(id)
+
+    
+@app.put("/bot/{id}")
+async def update_bot(
+    id: int,
+    data: UpdateBotRequest
+):
+    return BotAccountController().update_bot_account(id, data)
