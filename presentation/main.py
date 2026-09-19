@@ -1,7 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from presentation.controllers import *
+
+from presentation.controllers import authenticate 
+
 
 app = FastAPI()
 
@@ -26,7 +28,6 @@ app.add_middleware(
 # Schemas
 # =========================
 
-
 class LoginRequest(BaseModel):
     username: str
     password: str
@@ -36,30 +37,21 @@ class LoginRequest(BaseModel):
 # Routes
 # =========================
 
-
 @app.get("/")
 async def root():
-    return {"message": "Backend is running"}
+    return {
+        "message": "Backend is running"
+    }
 
 
 @app.post("/login")
 async def login(data: LoginRequest):
-
-    if data.username == "admin" and data.password == "1234":
-        return {
-            "success": True,
-            "message": "خوش آمدید",
-        }
-
-    return {
-        "success": False,
-        "message": "نام کاربری یا رمز عبور اشتباه است.",
-    }
+    return authenticate(data)
 
 
-# @app.get("/dashboard")
-# async def dashboard():
-#     return DashboardController().get_datas()
+# =========================
+# Dashboard
+# =========================
 
 import json
 from pathlib import Path

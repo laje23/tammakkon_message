@@ -6,7 +6,7 @@ from infrastructure.database.models import MessageTargetModel
 from domain.entities import MessageTarget
 from infrastructure.database.mappers import MessageTargetMapper
 from domain.repositories import IMessageTargetRepository
-from datetime import datetime
+from datetime import datetime , timedelta
 from domain.types import MessageTargetStatusType
 
 
@@ -72,3 +72,26 @@ class MessageTargetRepository(
             for model in models:
                 entities.append(self.mapper.to_entity(model))
         return entities
+
+    def get_today_messages(self) -> list[MessageTarget]:
+        today = datetime.today().date()
+
+        start_of_day = datetime.combine(today, datetime.min.time())
+        start_of_tomorrow = start_of_day + timedelta(days=1)
+
+        query = select(self.model).where(
+            and_(
+                self.model.created_at >= start_of_day,
+                self.model.created_at < start_of_tomorrow,
+            )
+        )
+
+        models = self.session.execute(query).scalars().all()
+
+        entities = []
+
+        for model in models:
+            entities.append(self.mapper.to_entity(model))
+
+        return entities
+        

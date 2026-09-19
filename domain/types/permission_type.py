@@ -2,5 +2,5 @@ from enum import Enum
 
 
 class PermissionType(Enum):
-    # todo................................................
-    ...
+    MAIN = "main"
+    STATUS = "status"

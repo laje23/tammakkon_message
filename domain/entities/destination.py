@@ -2,13 +2,14 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from domain.types import DestinationType
 from domain.base import AppEntity
-
+from domain.types import PlatformType
 
 @dataclass
 class Destination(AppEntity):
     id: int | None
     external_id: str
     name: str
+    platform : PlatformType 
     bot_account_id: int | None
     type: DestinationType
     is_active: bool = False

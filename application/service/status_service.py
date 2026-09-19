@@ -41,18 +41,6 @@ class StatisticsService(IStatisticsService):
 
         with self.unit_of_work as uow:
             messages = uow.Message.get_all()
-        if not messages:
-            return {
-                "2000-01-01": {
-                    "message_count": 0,
-                    "text_message": 0,
-                    "photo_message": 0,
-                    "audio_message": 0,
-                    "video_message": 0,
-                    "document_message": 0,
-                }
-            }
-
         messages_grouped = self._group_by_week(messages)
 
         for week_date, messages in messages_grouped.items():
@@ -92,58 +80,44 @@ class StatisticsService(IStatisticsService):
 
         return result
 
-    def destination_status(self) -> dict[str, dict[str, int]]:
-        result: dict[str, dict[str, int]] = {}
+    def destination_status(self) ->dict:
 
         with self.unit_of_work as uow:
             destinations = uow.Destination.get_all()
-        if not destinations:
-            return {
-                "2000-01-01": {
-                    "count": 0,
-                    "group": 0,
-                    "channel": 0,
-                    "super_group": 0,
-                    "private": 0,
-                }
+        result = {}
+        for destination in destinations :
+            result[destination.name]={
+                "platform" : destination.platform,
+                "bot_id":destination.bot_account_id,
+                "type" : destination.type,
+                "is_active":destination.is_active
             }
+        
+        return result 
 
-        destinations_grouped = self._group_by_week(destinations)
-
-        for week_date, destinations in destinations_grouped.items():
-
-            group = 0
-            channel = 0
-            super_group = 0
-            private = 0
-
-            for destination in destinations:
-                destination_type = str(destination.type).lower()
-
-                if destination_type == "channel":
-                    channel += 1
-
-                elif destination_type == "group":
-                    group += 1
-
-                elif destination_type == "super_group":
-                    super_group += 1
-
-                elif destination_type == "private":
-                    private += 1
-
-            result[week_date] = {
-                "count": len(destinations),
-                "group": group,
-                "channel": channel,
-                "super_group": super_group,
-                "private": private,
+    def message_target_status(self):
+        result = {}
+        with self.unit_of_work as uow :
+            message_targets =uow.MessageTarget.get_today_messages()
+        
+        for target in message_targets :
+            result[target.id] = {
+                "status" : target.status,
+                "destination_id" : target.destination_id,
+                "message_id" : target.message_id,
+                "send_at" : target.send_at,
+                "last_error": target.last_error
             }
-
         return result
+            
+        
+        
+        
+        
 
     def get_dashboard_data(self) -> dict:
         return {
             "messages": self.message_status(),
             "destinations": self.destination_status(),
+            "message_targets" : self.message_target_status(),
         }

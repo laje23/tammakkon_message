@@ -7,3 +7,6 @@ class IMessageTargetRepository(IBaseRepository[MessageTarget]):
 
     @abstractmethod
     def get_due(self) -> list[MessageTarget]: ...
+
+    @abstractmethod
+    def get_today_messages(self)-> list[MessageTarget]:...

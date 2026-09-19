@@ -16,6 +16,7 @@ class _Container:
     _encryption_service: IEncription | None = None
     _get_platform: IGetPlatform | None = None
     _media_reader: IReadMedia | None = None
+    _authentication : IAuthenticationService |None = None 
 
     @property
     def unit_of_work(self) -> IUnitOfWork:
@@ -79,6 +80,13 @@ class _Container:
             self._media_reader = ReadMedia()
 
         return self._media_reader
+    @property
+    def authentication(self) -> IAuthenticationService:
+        if self._authentication is None:
+            self._authentication = AuthenticationService(self.unit_of_work , self.hash_service )
+
+        return self._authentication
+    
 
 
 container = _Container()

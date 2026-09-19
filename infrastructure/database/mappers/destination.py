@@ -10,6 +10,7 @@ class DestinationMapper:
             id=entity.id,
             external_id=entity.external_id,
             name=entity.name,
+            platform = entity.platform,
             bot_account_id=entity.bot_account_id,
             type=entity.type,
             is_active=entity.is_active,
@@ -23,6 +24,7 @@ class DestinationMapper:
             id=model.id,
             external_id=model.external_id,
             name=model.name,
+            platform=model.platform ,
             bot_account_id=model.bot_account_id,
             type=model.type,
             is_active=model.is_active,
@@ -39,6 +41,7 @@ class DestinationMapper:
         model.external_id = entity.external_id
         model.name = entity.name
         model.bot_account_id = entity.bot_account_id
+        model.platform = entity.platform
         model.type = entity.type
         model.is_active = entity.is_active
         model.updated_at = entity.updated_at

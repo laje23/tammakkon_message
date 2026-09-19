@@ -50,47 +50,187 @@
         }
     },
     "destinations": {
-        "2026-08-22": {
-            "count": 35,
-            "group": 12,
-            "channel": 8,
-            "super_group": 6,
-            "private": 9
+        "کانال اخبار فناوری": {
+            "platform": "telegram",
+            "bot_id": "bot_001",
+            "type": "channel",
+            "is_active": true
         },
-        "2026-08-29": {
-            "count": 42,
-            "group": 15,
-            "channel": 10,
-            "super_group": 7,
-            "private": 10
+        "کانال اطلاع‌رسانی": {
+            "platform": "bale",
+            "bot_id": "bot_002",
+            "type": "channel",
+            "is_active": true
         },
-        "2026-09-05": {
-            "count": 50,
-            "group": 18,
-            "channel": 12,
-            "super_group": 9,
-            "private": 11
+        "کانال اخبار روز": {
+            "platform": "eitaa",
+            "bot_id": "bot_003",
+            "type": "channel",
+            "is_active": false
         },
-        "2026-09-12": {
-            "count": 57,
-            "group": 20,
-            "channel": 14,
-            "super_group": 10,
-            "private": 13
+        "کانال آموزش": {
+            "platform": "telegram",
+            "bot_id": "bot_001",
+            "type": "channel",
+            "is_active": true
         },
-        "2026-09-19": {
-            "count": 64,
-            "group": 23,
-            "channel": 16,
-            "super_group": 11,
-            "private": 14
+        "کانال فرهنگی": {
+            "platform": "robika",
+            "bot_id": "bot_004",
+            "type": "channel",
+            "is_active": false
         },
-        "2026-09-26": {
-            "count": 72,
-            "group": 26,
-            "channel": 18,
-            "super_group": 12,
-            "private": 16
+        "گروه پشتیبانی": {
+            "platform": "telegram",
+            "bot_id": "bot_001",
+            "type": "group",
+            "is_active": true
+        },
+        "گروه مدیریت": {
+            "platform": "bale",
+            "bot_id": "bot_002",
+            "type": "group",
+            "is_active": false
+        },
+        "کاربر خصوصی": {
+            "platform": "eitaa",
+            "bot_id": "bot_003",
+            "type": "private",
+            "is_active": true
+        },
+        "سوپرگروه اصلی": {
+            "platform": "telegram",
+            "bot_id": "bot_001",
+            "type": "super_group",
+            "is_active": true
+        }
+    },
+    "message_targets": {
+        "1": {
+            "status": "sent",
+            "destination_id": "1",
+            "message_id": "101",
+            "send_at": "2026-09-16T09:00:00",
+            "last_error": null
+        },
+        "2": {
+            "status": "sent",
+            "destination_id": "2",
+            "message_id": "102",
+            "send_at": "2026-09-16T09:30:00",
+            "last_error": null
+        },
+        "3": {
+            "status": "pending",
+            "destination_id": "3",
+            "message_id": "103",
+            "send_at": "2026-09-16T10:00:00",
+            "last_error": null
+        },
+        "4": {
+            "status": "processing",
+            "destination_id": "4",
+            "message_id": "104",
+            "send_at": "2026-09-16T10:30:00",
+            "last_error": null
+        },
+        "5": {
+            "status": "failed",
+            "destination_id": "5",
+            "message_id": "105",
+            "send_at": "2026-09-16T11:00:00",
+            "last_error": "ارتباط با سرویس مقصد برقرار نشد"
+        },
+        "6": {
+            "status": "canceled",
+            "destination_id": "1",
+            "message_id": "106",
+            "send_at": "2026-09-16T11:30:00",
+            "last_error": null
+        },
+        "7": {
+            "status": "pending",
+            "destination_id": "2",
+            "message_id": "107",
+            "send_at": "2026-09-16T12:00:00",
+            "last_error": null
+        },
+        "8": {
+            "status": "sent",
+            "destination_id": "3",
+            "message_id": "108",
+            "send_at": "2026-09-16T12:30:00",
+            "last_error": null
+        },
+        "9": {
+            "status": "failed",
+            "destination_id": "4",
+            "message_id": "109",
+            "send_at": "2026-09-16T13:00:00",
+            "last_error": "خطا در ارسال پیام"
+        },
+        "10": {
+            "status": "processing",
+            "destination_id": "5",
+            "message_id": "110",
+            "send_at": "2026-09-16T13:30:00",
+            "last_error": null
+        },
+        "11": {
+            "status": "pending",
+            "destination_id": "1",
+            "message_id": "111",
+            "send_at": "2026-09-16T14:00:00",
+            "last_error": null
+        },
+        "12": {
+            "status": "sent",
+            "destination_id": "2",
+            "message_id": "112",
+            "send_at": "2026-09-16T14:30:00",
+            "last_error": null
+        },
+        "13": {
+            "status": "sent",
+            "destination_id": "3",
+            "message_id": "113",
+            "send_at": "2026-09-16T15:00:00",
+            "last_error": null
+        },
+        "14": {
+            "status": "pending",
+            "destination_id": "4",
+            "message_id": "114",
+            "send_at": "2026-09-16T15:30:00",
+            "last_error": null
+        },
+        "15": {
+            "status": "canceled",
+            "destination_id": "5",
+            "message_id": "115",
+            "send_at": "2026-09-16T16:00:00",
+            "last_error": null
+        },
+        "16": {
+            "status": "failed",
+            "destination_id": "1",
+            "message_id": "116",
+            "send_at": "2026-09-16T16:30:00",
+            "last_error": "شناسه مقصد نامعتبر است"
+        },
+        "17": {
+            "status": "sent",
+            "destination_id": "2",
+            "message_id": "117",
+            "send_at": "2026-09-16T17:00:00",
+            "last_error": null
+        },
+        "18": {
+            "status": "pending",
+            "destination_id": "3",
+            "message_id": "118",
+            "send_at": "2026-09-16T17:30:00",
+            "last_error": null
         }
     }
 }

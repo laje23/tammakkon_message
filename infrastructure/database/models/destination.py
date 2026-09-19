@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from domain.types import PlatformType
 from sqlalchemy import Boolean, DateTime, Enum, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -24,8 +24,13 @@ class DestinationModel(BaseModel):
         String(255),
         nullable=False,
     )
+    
+    platform: Mapped[PlatformType] = mapped_column(
+        Enum(PlatformType),
+        nullable=False,
+    )
 
-    bot_account_id: Mapped[int] = mapped_column(
+    bot_account_id: Mapped[int | None] = mapped_column(
         ForeignKey("bot_accounts.id"),
         nullable=True,
     )
