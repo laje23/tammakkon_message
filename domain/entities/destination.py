@@ -19,6 +19,7 @@ class Destination(AppEntity):
     def update(
         self,
         name: str | None = None,
+        platform : PlatformType | None = None, 
         external_id: str | None = None,
         bot_account_id: int | None = None,
         type: DestinationType | None = None,
@@ -31,6 +32,9 @@ class Destination(AppEntity):
 
         if name is not None:
             self.name = name
+            
+        if platform is not None:
+            self.platform = platform
 
         if type is not None:
             self.type = type

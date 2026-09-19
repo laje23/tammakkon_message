@@ -1,6 +1,0 @@
-from .activation_entity import ActivationEntityCommand
-from .create_entity import CreateEntityCommand
-from .delete_entity import DeleteEntityCommand
-from .proccess_send_messages import ProcessSendMessagesCommand
-from .send_message import SendMessagesCommand
-from .update_entity import UpdateEntityCommand

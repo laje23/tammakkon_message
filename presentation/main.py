@@ -36,7 +36,16 @@ class UpdateBotRequest(BaseModel):
     platform: str
     is_active: bool
     token: str | None = None
-
+    
+class UpdateDestinationRequest(BaseModel):
+    name: str
+    platform: str
+    is_active: bool
+    external_id : str 
+    bot_account_id : str
+    type : str 
+    
+    
 # =========================
 # Routes
 # =========================
@@ -84,3 +93,21 @@ async def update_bot(
     data: UpdateBotRequest
 ):
     return BotAccountController().update_bot_account(id, data)
+
+
+@app.get("/destination")
+async def get_destinations():
+    return DestinationController().get_all_destinations()
+
+
+@app.get("/destination/{id}")
+async def get_destination(id: int):
+    return DestinationController().get_destination_by_id(id)
+
+    
+@app.put("/destination/{id}")
+async def update_destination(
+    id: int,
+    data: UpdateBotRequest
+):
+    return DestinationController().update_destination(id, data)

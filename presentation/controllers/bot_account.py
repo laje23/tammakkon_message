@@ -78,3 +78,10 @@ class BotAccountController:
                 "created_at": bot_account.created_at,
                 "updated_at": bot_account.updated_at,
             }
+        
+        self.container._logger.log(
+            f"bot_account with id {bot_account.id} updated",
+            self.container._logger.category.AUTH.value,
+            self.container._logger.level.INFO.value,
+            self.__class__.__name__ 
+        )
