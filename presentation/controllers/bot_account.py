@@ -57,10 +57,12 @@ class BotAccountController:
             if not bot_account:
                 raise NotFoundError("bot_account not found")
 
+            token = container.encryption_service.encrip(data.token) if data.token else None 
+
             bot_account.update(
                 platform=data.platform,
                 name=data.name,
-                token=data.token
+                token=token
             )
 
             if data.is_active:
@@ -70,6 +72,14 @@ class BotAccountController:
 
             uow.BotAccount.update(bot_account)
 
+        
+            self.container.logger.log(
+                f"bot_account with id {bot_account.id} updated",
+                self.container.logger.category.AUTH,
+                self.container.logger.level.INFO,
+                self.__class__.__name__ 
+            )
+            
             return {
                 "id": bot_account.id,
                 "name": bot_account.name,
@@ -78,10 +88,3 @@ class BotAccountController:
                 "created_at": bot_account.created_at,
                 "updated_at": bot_account.updated_at,
             }
-        
-        self.container._logger.log(
-            f"bot_account with id {bot_account.id} updated",
-            self.container._logger.category.AUTH.value,
-            self.container._logger.level.INFO.value,
-            self.__class__.__name__ 
-        )

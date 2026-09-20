@@ -83,11 +83,11 @@ class DestinationController:
                 "updated_at": destination.updated_at,
             }
 
-        self.container.logger.log(
-            f"destination with id {id} updated",
-            self.container.logger.category.AUTH,
-            self.container.logger.level.INFO,
-            self.__class__.__name__,
-        )
+            self.container.logger.log(
+                f"destination with id {id} updated",
+                self.container.logger.category.AUTH,
+                self.container.logger.level.INFO,
+                self.__class__.__name__,
+            )
 
-        return result
+            return result

@@ -42,7 +42,7 @@ class UpdateDestinationRequest(BaseModel):
     platform: str
     is_active: bool
     external_id : str 
-    bot_account_id : str
+    bot_account_id : int
     type : str 
     
     
@@ -108,6 +108,6 @@ async def get_destination(id: int):
 @app.put("/destination/{id}")
 async def update_destination(
     id: int,
-    data: UpdateBotRequest
+    data: UpdateDestinationRequest
 ):
     return DestinationController().update_destination(id, data)
