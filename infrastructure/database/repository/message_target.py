@@ -94,4 +94,10 @@ class MessageTargetRepository(
             entities.append(self.mapper.to_entity(model))
 
         return entities
+    
+    def exist_by_message_id(self , message_id:int):
+        query = select(self.model).where(
+            self.model.message_id == message_id
+        )
         
+        return self.session.execute(query).first() is not None

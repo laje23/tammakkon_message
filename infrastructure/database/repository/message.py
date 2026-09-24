@@ -83,3 +83,4 @@ class MessageRepository(SQLAlchemyRepository[MessageModel], IMessageRepository):
 
         total = self.session.execute(query).scalar_one()
         return total
+    

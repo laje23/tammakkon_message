@@ -179,3 +179,17 @@ async def get_message(id:int):
 @app.get("/media/{id}")
 async def get_media(id: int):
     return MessageController().get_media(id)
+
+@app.delete("/message/{id}")
+async def delete_message(id: int):
+    return MessageController().delete_message(id)
+
+@app.put("/message/{id}")
+async def update_message(
+    id: int,
+    text: str = Form("")
+):
+    return MessageController().update_message(
+        id=id,
+        text=text
+    )

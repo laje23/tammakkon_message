@@ -136,3 +136,39 @@ class MessageController:
                 content=media_file,
                 media_type=media_type or "application/octet-stream"
             )
+            
+    def delete_message(self, id: int):
+        with self.container.unit_of_work as uow:
+            message = uow.Message.get_by_id(id)
+
+            if not message:
+                raise NotFoundError("message not found")
+            if message.id :
+                if uow.MessageTarget.exist_by_message_id(message.id):
+                    return {
+                        "success": False,
+                        "message": "پیام زمانبندی شده است"
+                    }
+                
+
+            uow.Message.delete(id)
+
+        return {
+            "success": True,
+            "message": "پیام با موفقیت حذف شد"
+        }
+    def update_message(self, id: int, text: str):
+        with self.container.unit_of_work as uow:
+            message = uow.Message.get_by_id(id)
+
+            if not message:
+                raise NotFoundError("message not found")
+
+            message.update(text=text)
+
+            uow.Message.update(message)
+
+        return {
+            "success": True,
+            "message": "پیام با موفقیت ویرایش شد"
+        }
