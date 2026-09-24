@@ -53,6 +53,7 @@ class MessageController:
         media_file: bytes,
         size: int,
     ):
+        storage_name = "storage/"+storage_name
         self.container.media_service.save(
             storage_name,
             media_file
