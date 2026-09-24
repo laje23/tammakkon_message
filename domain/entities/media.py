@@ -6,7 +6,6 @@ from domain.base import AppEntity
 @dataclass
 class Media(AppEntity):
     id: int | None
-    message_id: int
     original_name: str
     stored_name: str
     size: int

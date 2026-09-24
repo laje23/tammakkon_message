@@ -1,6 +1,6 @@
 from infrastructure.dependency_Injection import container
 from domain.exeptions import NotFoundError
-
+from domain.entities import Destination
 
 class DestinationController:
 
@@ -91,3 +91,37 @@ class DestinationController:
             )
 
             return result
+        
+    def create_destination(self ,data):
+        d=Destination(id = None ,name=data.name ,platform=data.platform ,is_active=data.is_active ,external_id=data.external_id ,bot_account_id=data.bot_account_id ,type=data.type)                
+        with self.container.unit_of_work as uow :
+            uow.Destination.create(d)
+            
+            self.container.logger.log(
+                f"destination with name {data.name} created",
+                self.container.logger.category.AUTH,
+                self.container.logger.level.INFO,
+                self.__class__.__name__,
+            )
+            
+        return {
+            "success": True,
+            "message": "مقصد با موفقیت ساخته شد."
+        }
+            
+    def delete_destination(self ,id):
+        
+        with self.container.unit_of_work as uow :
+            uow.Destination.delete(id)
+            
+            self.container.logger.log(
+                f"destination with id {id} deleted",
+                self.container.logger.category.AUTH,
+                self.container.logger.level.INFO,
+                self.__class__.__name__ 
+            )
+            
+        return {
+            "success": True,
+            "message": "مقصد با موفقیت حذف شد."
+        }

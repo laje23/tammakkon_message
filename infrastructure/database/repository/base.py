@@ -30,8 +30,12 @@ class SQLAlchemyRepository(Generic[ModelT]):
 
         return list(result)
 
-    def delete(self, model: ModelT) -> None:
-        self.session.delete(model)
+    def delete(self, id: int) -> None:
+        model = self.session.get(self.model, id)
+
+        if model:
+            self.session.delete(model)
+
 
     @property
     def model(self) -> type[ModelT]:

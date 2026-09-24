@@ -14,11 +14,6 @@ class MediaModel(BaseModel):
         autoincrement=True,
     )
 
-    message_id: Mapped[int] = mapped_column(
-        ForeignKey("messages.id"),
-        nullable=False,
-    )
-
     original_name: Mapped[str] = mapped_column(
         String(255),
         nullable=False,

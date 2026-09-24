@@ -15,14 +15,6 @@ class _Secrets:
 
         return value
 
-    @property
-    def bot_token(self) -> str:
-        value = os.getenv("BOT_TOKEN")
-
-        if not value:
-            raise RuntimeError("BOT_TOKEN is not set")
-
-        return value
 
     @property
     def debug(self) -> bool:
@@ -30,10 +22,10 @@ class _Secrets:
 
     @property
     def encriptio_key(self) -> str:
-        value = os.getenv("BOT_TOKEN")
+        value = os.getenv("ENCRIPTION_KEY")
 
         if not value:
-            raise RuntimeError("BOT_TOKEN is not set")
+            raise RuntimeError("ENCRIPTION_KEY is not set")
         return value
 
 

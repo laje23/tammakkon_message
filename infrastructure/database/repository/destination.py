@@ -39,9 +39,8 @@ class DestinationRepository(
         self.session.refresh(model)
         return model.id
 
-    def delete(self, entity: Destination) -> None:
-        model = self.mapper.to_model(entity)
-        super().delete(model)
+    def delete(self,id) -> None:
+        super().delete(id)
 
     def get_by_id(self, id: int) -> Destination | None:
         model = super().get_by_id(id)
@@ -86,3 +85,11 @@ class DestinationRepository(
             entities.append(self.mapper.to_entity(model))
 
         return entities
+
+    def exists_by_bot_account_id(self, bot_account_id: int) -> bool:
+
+        query = select(self.model.id).where(
+            self.model.bot_account_id == bot_account_id
+        )
+
+        return self.session.execute(query).first() is not None

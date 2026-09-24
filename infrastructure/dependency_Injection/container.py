@@ -15,7 +15,7 @@ class _Container:
     _hash_service: IHashService | None = None
     _encryption_service: IEncription | None = None
     _get_platform: IGetPlatform | None = None
-    _media_reader: IReadMedia | None = None
+    _media_service: IMediaService | None = None
     _authentication : IAuthenticationService |None = None 
 
     @property
@@ -75,11 +75,11 @@ class _Container:
         return self._get_platform
 
     @property
-    def media_reader(self) -> IReadMedia:
-        if self._media_reader is None:
-            self._media_reader = ReadMedia()
+    def media_service(self) -> IMediaService:
+        if self._media_service is None:
+            self._media_service = MediaService()
 
-        return self._media_reader
+        return self._media_service
     @property
     def authentication(self) -> IAuthenticationService:
         if self._authentication is None:

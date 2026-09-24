@@ -1,5 +1,7 @@
 from infrastructure.dependency_Injection import container
 from domain.exeptions import NotFoundError
+from domain.entities import BotAccount
+from fastapi import HTTPException
 
 
 class BotAccountController:
@@ -57,8 +59,12 @@ class BotAccountController:
             if not bot_account:
                 raise NotFoundError("bot_account not found")
 
-            token = container.encryption_service.encrip(data.token) if data.token else None 
-
+            token = (
+                self.container.encryption_service.encrip(data.token)
+                if data.token
+                else None
+            )
+            
             bot_account.update(
                 platform=data.platform,
                 name=data.name,
@@ -88,3 +94,37 @@ class BotAccountController:
                 "created_at": bot_account.created_at,
                 "updated_at": bot_account.updated_at,
             }
+            
+    def delete_bot_account(self, id: int):
+
+        with self.container.unit_of_work as uow:
+            if uow.Destination.exists_by_bot_account_id(id):
+                return {
+                "success": False,
+                "message": "بات به چند مقصد متصل است"
+                }
+
+        return {
+            "success": True,
+            "message": "بات با موفقیت حذف شد."
+        }
+                
+    def create_bot_account(self ,data):
+        token = self.container.encryption_service.encrip(data.token)
+        
+        bot = BotAccount(None , platform=data.platform , name=data.name ,token=token,is_active=data.is_active)
+        
+        with self.container.unit_of_work as uow :
+            uow.BotAccount.create(bot)
+            
+            self.container.logger.log(
+                f"bot_account with name {data.name} created",
+                self.container.logger.category.AUTH,
+                self.container.logger.level.INFO,
+                self.__class__.__name__,
+            )
+            
+        return {
+            "success": True,
+            "message": "بات با موفقیت ساخته شد."
+        }

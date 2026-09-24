@@ -39,9 +39,8 @@ class BotAccountRepository(
         self.session.refresh(model)
         return model.id
 
-    def delete(self, entity: BotAccount) -> None:
-        model = self.mapper.to_model(entity)
-        super().delete(model)
+    def delete(self, id) -> None:
+        super().delete(id)
 
     def get_by_id(self, id: int) -> BotAccount | None:
         model =super().get_by_id(id)
