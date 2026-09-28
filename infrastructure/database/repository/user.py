@@ -192,3 +192,74 @@ class UserRepository(SQLAlchemyRepository[UserModel], IUserRepository):
             self.role_mapper.to_entity(model)
             for model in models
         ]
+
+    def add_roles(
+        self,
+        user_id: int,
+        role_ids: list[int],
+    ) -> None:
+
+        # بررسی وجود کاربر
+        user = super().get_by_id(user_id)
+
+        if user is None:
+            raise NotFoundError(
+                f"User with id={user_id} not found"
+            )
+
+        for role_id in role_ids:
+
+            # بررسی وجود Role
+            role = self.session.get(RoleModel, role_id)
+
+            if role is None:
+                raise NotFoundError(
+                    f"Role with id={role_id} not found"
+                )
+
+            # بررسی اینکه Role قبلاً اختصاص داده نشده باشد
+            query = select(user_role_table).where(
+                user_role_table.c.user_id == user_id,
+                user_role_table.c.role_id == role_id,
+            )
+
+            exists = self.session.execute(query).first()
+
+            if exists:
+                continue
+
+            # ایجاد رابطه
+            query = insert(user_role_table).values(
+                user_id=user_id,
+                role_id=role_id,
+            )
+
+            self.session.execute(query)
+
+        self.session.flush()
+
+
+    def remove_roles(
+        self,
+        user_id: int,
+        role_ids: list[int],
+    ) -> None:
+
+        # بررسی وجود کاربر
+        user = super().get_by_id(user_id)
+
+        if user is None:
+            raise NotFoundError(
+                f"User with id={user_id} not found"
+            )
+
+        for role_id in role_ids:
+
+            query = delete(user_role_table).where(
+                user_role_table.c.user_id == user_id,
+                user_role_table.c.role_id == role_id,
+            )
+
+            self.session.execute(query)
+
+        self.session.flush()

@@ -2,5 +2,8 @@ from .dashbourd import DashboardController
 from .bot_account import BotAccountController
 from .destination import DestinationController
 from .auhtentication import authenticate
-from .getters import *
+from .user import UserController
 from .message import MessageController
+from .log import LogController
+from .platform_setting import PlatformSettingController
+from .sender_setting import SenderSettingController

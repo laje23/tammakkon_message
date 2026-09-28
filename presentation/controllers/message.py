@@ -4,9 +4,24 @@ from infrastructure.dependency_Injection import container
 from domain.entities import Message, Media
 import mimetypes
 from fastapi.responses import Response
+from presentation.controllers.decorators import safe_class 
+
+
+
+
+@safe_class
 class MessageController:
 
     container = container
+    
+    def _log(self ,message):
+        self.container.logger.log(
+            message ,
+            self.container.logger.category.SYSTEM,
+            self.container.logger.level.INFO,
+            self.__class__.__name__,
+        )
+
 
     async def create_message(
         self,
@@ -40,6 +55,7 @@ class MessageController:
 
         with self.container.unit_of_work as uow:
             uow.Message.create(message)
+        self._log("message created")
 
         return {
             "success": True,
@@ -69,6 +85,7 @@ class MessageController:
         with self.container.unit_of_work as uow:
             media_id = uow.Media.create(media)
 
+        self._log("media created")
         return media_id
 
     def get_messages(
@@ -153,6 +170,7 @@ class MessageController:
 
             uow.Message.delete(id)
 
+        self._log("message deleted")
         return {
             "success": True,
             "message": "پیام با موفقیت حذف شد"
@@ -168,6 +186,7 @@ class MessageController:
 
             uow.Message.update(message)
 
+        self._log("message updated")
         return {
             "success": True,
             "message": "پیام با موفقیت ویرایش شد"

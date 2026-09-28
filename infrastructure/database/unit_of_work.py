@@ -84,9 +84,6 @@ class UnitOfWork(IUnitOfWork):
         if self.session:
             if exc_type is not None:
                 self.session.rollback()
-                print(exc_value)
-                print(traceback)
-                print(exc_type)
                 raise DataBaseError(
                     exc_value,
                     traceback,

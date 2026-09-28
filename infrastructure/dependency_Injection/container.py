@@ -1,5 +1,4 @@
 from domain.interfaces import *
-from infrastructure.bus import *
 from application.service import *
 from infrastructure.database.unit_of_work import UnitOfWork
 from infrastructure.platforms import GetPlatform
@@ -38,20 +37,6 @@ class _Container:
             self._statistics_service = StatisticsService(self.unit_of_work)
 
         return self._statistics_service
-
-    @property
-    def command_bus(self) -> ICommandBus:
-        if self._command_bus is None:
-            self._command_bus = CommandBus()
-
-        return self._command_bus
-
-    @property
-    def event_bus(self) -> IEventBus:
-        if self._event_bus is None:
-            self._event_bus = EventBus()
-
-        return self._event_bus
 
     @property
     def hash_service(self) -> IHashService:

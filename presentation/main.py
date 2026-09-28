@@ -41,7 +41,7 @@ class UpdateDestinationRequest(BaseModel):
     platform: str
     is_active: bool
     external_id : str 
-    bot_account_id : int
+    bot_account_id : int | None = None
     type : str 
     
 
@@ -60,6 +60,35 @@ class CreateDestinationRequest(BaseModel):
     bot_account_id: int | None
     type: str
 
+class CreateUserRequest(BaseModel):
+    user_name: str
+    password: str
+    is_active: bool = True
+
+
+class UpdateUserRequest(BaseModel):
+    user_name: str
+    password: str | None = None
+    is_active: bool
+
+class UpdateUserRolesRequest(BaseModel):
+    remove_list: list[int] = []
+    add_list: list[int] = []
+
+class UpdatePlatformSettingRequest(BaseModel):
+    limit_character  : int |None = None
+    limit_file_size  : int |None = None
+    bale_base_url  : str |None = None
+    bale_active  : bool |None = None
+    eitaa_base_url  : str |None = None
+    eitaa_active  : bool |None = None
+    robika_base_url  : str |None = None
+    robika_active : bool |None = None
+
+class UpdateSenderSettingRequest(BaseModel):
+    time_out : int |None = None
+    max_try : int|None = None
+    use_poroxy : bool |None = None
 
 
 # =========================
@@ -193,3 +222,75 @@ async def update_message(
         id=id,
         text=text
     )
+
+
+# =========================
+# Users
+# =========================
+
+@app.get("/user")
+async def get_users():
+    return UserController().get_all_user()
+
+
+@app.get("/user/{id}")
+async def get_user(id: int):
+    return UserController().get_user_by_id(id)
+
+
+@app.post("/user")
+async def create_user(data: CreateUserRequest):
+    return UserController().create_user(data)
+
+
+@app.put("/user/{id}")
+async def update_user(id: int, data: UpdateUserRequest):
+    return UserController().update_user(
+        id=id,
+        data=data
+    )
+
+
+@app.delete("/user/{id}")
+async def delete_user(id: int):
+    return UserController().delete_user(id)
+
+@app.get("/user/{id}/roles")
+async def get_user_roles(id: int):
+    return UserController().get_roles(id)
+
+
+@app.put("/user/{id}/roles")
+async def update_user_roles(
+    id: int,
+    data: UpdateUserRolesRequest
+):
+    return UserController().update_roles(id,data)
+
+
+@app.get("/settings/logs")
+async def get_logs():
+    return LogController().get_logs()
+
+@app.get("/settings/platforms")
+async def get_platform_setting():
+    return PlatformSettingController().get_setting()
+
+
+@app.put("/settings/platforms")
+async def update_platform_setting(
+    data: UpdatePlatformSettingRequest
+):
+    return PlatformSettingController().update_setting(data)
+
+
+@app.get("/settings/sends")
+async def get_sender_setting():
+    return SenderSettingController().get_setting()
+
+
+@app.put("/settings/sends")
+async def update_sender_setting(
+    data: UpdateSenderSettingRequest
+):
+    return SenderSettingController().update_setting(data)

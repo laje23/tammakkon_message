@@ -2,11 +2,22 @@ from infrastructure.dependency_Injection import container
 from domain.exeptions import NotFoundError
 from domain.entities import BotAccount
 from fastapi import HTTPException
+from presentation.controllers.decorators import safe_class 
 
-
+@safe_class
 class BotAccountController:
 
     container = container
+
+
+    def _log(self ,message):
+        self.container.logger.log(
+            message ,
+            self.container.logger.category.SYSTEM,
+            self.container.logger.level.INFO,
+            self.__class__.__name__,
+        )
+
 
     def get_bot_account_by_id(self, id: int):
 
@@ -79,12 +90,7 @@ class BotAccountController:
             uow.BotAccount.update(bot_account)
 
         
-            self.container.logger.log(
-                f"bot_account with id {bot_account.id} updated",
-                self.container.logger.category.AUTH,
-                self.container.logger.level.INFO,
-                self.__class__.__name__ 
-            )
+            self._log("bot updated")
             
             return {
                 "id": bot_account.id,
@@ -103,6 +109,7 @@ class BotAccountController:
                 "success": False,
                 "message": "بات به چند مقصد متصل است"
                 }
+        self._log("bot deleted")
 
         return {
             "success": True,
@@ -116,14 +123,8 @@ class BotAccountController:
         
         with self.container.unit_of_work as uow :
             uow.BotAccount.create(bot)
-            
-            self.container.logger.log(
-                f"bot_account with name {data.name} created",
-                self.container.logger.category.AUTH,
-                self.container.logger.level.INFO,
-                self.__class__.__name__,
-            )
-            
+        
+        self._log("bot created")
         return {
             "success": True,
             "message": "بات با موفقیت ساخته شد."
