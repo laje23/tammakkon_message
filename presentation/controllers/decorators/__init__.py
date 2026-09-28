@@ -1,1 +1,1 @@
-from .error_handler import safe_class , safe_method
+from .error_handler import safe_class, safe_method

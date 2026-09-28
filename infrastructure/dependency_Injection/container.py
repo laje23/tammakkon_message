@@ -14,8 +14,8 @@ class _Container:
     _hash_service: IHashService | None = None
     _encryption_service: IEncription | None = None
     _get_platform: IGetPlatform | None = None
-    _media_service: IMediaService | None = None
-    _authentication : IAuthenticationService |None = None 
+    _media_service: IStorageService | None = None
+    _authentication: IAuthenticationService | None = None
 
     @property
     def unit_of_work(self) -> IUnitOfWork:
@@ -60,18 +60,20 @@ class _Container:
         return self._get_platform
 
     @property
-    def media_service(self) -> IMediaService:
+    def media_service(self) -> IStorageService:
         if self._media_service is None:
-            self._media_service = MediaService()
+            self._media_service = StorageService()
 
         return self._media_service
+
     @property
     def authentication(self) -> IAuthenticationService:
         if self._authentication is None:
-            self._authentication = AuthenticationService(self.unit_of_work , self.hash_service )
+            self._authentication = AuthenticationService(
+                self.unit_of_work, self.hash_service
+            )
 
         return self._authentication
-    
 
 
 container = _Container()

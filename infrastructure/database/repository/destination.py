@@ -39,7 +39,7 @@ class DestinationRepository(
         self.session.refresh(model)
         return model.id
 
-    def delete(self,id) -> None:
+    def delete(self, id) -> None:
         super().delete(id)
 
     def get_by_id(self, id: int) -> Destination | None:
@@ -88,8 +88,6 @@ class DestinationRepository(
 
     def exists_by_bot_account_id(self, bot_account_id: int) -> bool:
 
-        query = select(self.model.id).where(
-            self.model.bot_account_id == bot_account_id
-        )
+        query = select(self.model.id).where(self.model.bot_account_id == bot_account_id)
 
         return self.session.execute(query).first() is not None

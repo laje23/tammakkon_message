@@ -6,7 +6,7 @@ from infrastructure.database.models import MessageTargetModel
 from domain.entities import MessageTarget
 from infrastructure.database.mappers import MessageTargetMapper
 from domain.repositories import IMessageTargetRepository
-from datetime import datetime , timedelta
+from datetime import datetime, timedelta
 from domain.types import MessageTargetStatusType
 
 
@@ -94,10 +94,8 @@ class MessageTargetRepository(
             entities.append(self.mapper.to_entity(model))
 
         return entities
-    
-    def exist_by_message_id(self , message_id:int):
-        query = select(self.model).where(
-            self.model.message_id == message_id
-        )
-        
+
+    def exist_by_message_id(self, message_id: int):
+        query = select(self.model).where(self.model.message_id == message_id)
+
         return self.session.execute(query).first() is not None

@@ -36,7 +36,6 @@ class SQLAlchemyRepository(Generic[ModelT]):
         if model:
             self.session.delete(model)
 
-
     @property
     def model(self) -> type[ModelT]:
         raise NotImplementedError

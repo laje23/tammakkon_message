@@ -1,7 +1,7 @@
 from domain.exeptions import ValidationError, NotFoundError
 from infrastructure.database.repository import SQLAlchemyRepository
-from sqlalchemy.orm import Session 
-from sqlalchemy import select, insert, delete 
+from sqlalchemy.orm import Session
+from sqlalchemy import select, insert, delete
 
 from infrastructure.database.models import UserModel, RoleModel
 from infrastructure.database.relation_tables.user_role import user_role_table
@@ -38,9 +38,7 @@ class UserRepository(SQLAlchemyRepository[UserModel], IUserRepository):
         model = super().get_by_id(entity.id)
 
         if model is None:
-            raise NotFoundError(
-                f"User with id={entity.id} not found"
-            )
+            raise NotFoundError(f"User with id={entity.id} not found")
 
         self.mapper.update_model(entity, model)
 
@@ -56,36 +54,24 @@ class UserRepository(SQLAlchemyRepository[UserModel], IUserRepository):
             return self.mapper.to_entity(model)
 
         return None
-    
-    def get_by_username(self , username:str):
-        query = select(UserModel).where(
-            UserModel.user_name == username
-        )
-        model =self.session.execute(query).scalar()
-        if model :
+
+    def get_by_username(self, username: str):
+        query = select(UserModel).where(UserModel.user_name == username)
+        model = self.session.execute(query).scalar()
+        if model:
             return self.mapper.to_entity(model)
-            
-    
 
     def get_all(self) -> list[User]:
         models = super().get_all()
 
-        return [
-            self.mapper.to_entity(model)
-            for model in models
-        ]
+        return [self.mapper.to_entity(model) for model in models]
 
     def search_username(self, name: str) -> list[User]:
-        query = select(UserModel).where(
-            UserModel.user_name.ilike(f"%{name}%")
-        )
+        query = select(UserModel).where(UserModel.user_name.ilike(f"%{name}%"))
 
         models = self.session.execute(query).scalars().all()
 
-        return [
-            self.mapper.to_entity(model)
-            for model in models
-        ]
+        return [self.mapper.to_entity(model) for model in models]
 
     # ---------------------------------------------------------
     # Roles
@@ -101,17 +87,13 @@ class UserRepository(SQLAlchemyRepository[UserModel], IUserRepository):
         user = super().get_by_id(user_id)
 
         if user is None:
-            raise NotFoundError(
-                f"User with id={user_id} not found"
-            )
+            raise NotFoundError(f"User with id={user_id} not found")
 
         # بررسی وجود Role
         role = self.session.get(RoleModel, role_id)
 
         if role is None:
-            raise NotFoundError(
-                f"Role with id={role_id} not found"
-            )
+            raise NotFoundError(f"Role with id={role_id} not found")
 
         # بررسی اینکه این Role قبلاً به User داده نشده باشد
         query = select(user_role_table).where(
@@ -143,9 +125,7 @@ class UserRepository(SQLAlchemyRepository[UserModel], IUserRepository):
         user = super().get_by_id(user_id)
 
         if user is None:
-            raise NotFoundError(
-                f"User with id={user_id} not found"
-            )
+            raise NotFoundError(f"User with id={user_id} not found")
 
         # حذف رابطه User و Role
         query = delete(user_role_table).where(
@@ -171,9 +151,7 @@ class UserRepository(SQLAlchemyRepository[UserModel], IUserRepository):
         user = super().get_by_id(user_id)
 
         if user is None:
-            raise NotFoundError(
-                f"User with id={user_id} not found"
-            )
+            raise NotFoundError(f"User with id={user_id} not found")
 
         query = (
             select(RoleModel)
@@ -181,17 +159,12 @@ class UserRepository(SQLAlchemyRepository[UserModel], IUserRepository):
                 user_role_table,
                 user_role_table.c.role_id == RoleModel.id,
             )
-            .where(
-                user_role_table.c.user_id == user_id
-            )
+            .where(user_role_table.c.user_id == user_id)
         )
 
         models = self.session.execute(query).scalars().all()
 
-        return [
-            self.role_mapper.to_entity(model)
-            for model in models
-        ]
+        return [self.role_mapper.to_entity(model) for model in models]
 
     def add_roles(
         self,
@@ -203,9 +176,7 @@ class UserRepository(SQLAlchemyRepository[UserModel], IUserRepository):
         user = super().get_by_id(user_id)
 
         if user is None:
-            raise NotFoundError(
-                f"User with id={user_id} not found"
-            )
+            raise NotFoundError(f"User with id={user_id} not found")
 
         for role_id in role_ids:
 
@@ -213,9 +184,7 @@ class UserRepository(SQLAlchemyRepository[UserModel], IUserRepository):
             role = self.session.get(RoleModel, role_id)
 
             if role is None:
-                raise NotFoundError(
-                    f"Role with id={role_id} not found"
-                )
+                raise NotFoundError(f"Role with id={role_id} not found")
 
             # بررسی اینکه Role قبلاً اختصاص داده نشده باشد
             query = select(user_role_table).where(
@@ -238,7 +207,6 @@ class UserRepository(SQLAlchemyRepository[UserModel], IUserRepository):
 
         self.session.flush()
 
-
     def remove_roles(
         self,
         user_id: int,
@@ -249,9 +217,7 @@ class UserRepository(SQLAlchemyRepository[UserModel], IUserRepository):
         user = super().get_by_id(user_id)
 
         if user is None:
-            raise NotFoundError(
-                f"User with id={user_id} not found"
-            )
+            raise NotFoundError(f"User with id={user_id} not found")
 
         for role_id in role_ids:
 

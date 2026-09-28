@@ -17,7 +17,7 @@ class MediaRepository(SQLAlchemyRepository[MediaModel], IMediaRepository):
     def model(self) -> type[MediaModel]:
         return MediaModel
 
-    def create(self, entity: Media)-> int :
+    def create(self, entity: Media) -> int:
         model = self.mapper.to_model(entity)
         id = super().create(model)
         return id

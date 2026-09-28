@@ -1,11 +1,10 @@
 from abc import ABC, abstractmethod
 
 
-class IMediaService(ABC):
+class IStorageService(ABC):
 
     @abstractmethod
-    def read(self, storge_name: str) -> bytes: ...
+    def read_media(self, storge_name: str) -> bytes: ...
 
     @abstractmethod
-    def save(self, storage_name: str, file: bytes) -> None:
-        ...
+    def save_media(self, storage_name: str, file: bytes) -> None: ...

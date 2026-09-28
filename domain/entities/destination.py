@@ -4,12 +4,13 @@ from domain.types import DestinationType
 from domain.base import AppEntity
 from domain.types import PlatformType
 
+
 @dataclass
 class Destination(AppEntity):
     id: int | None
     external_id: str
     name: str
-    platform : PlatformType 
+    platform: PlatformType
     bot_account_id: int | None
     type: DestinationType
     is_active: bool = False
@@ -19,7 +20,7 @@ class Destination(AppEntity):
     def update(
         self,
         name: str | None = None,
-        platform : PlatformType | None = None, 
+        platform: PlatformType | None = None,
         external_id: str | None = None,
         bot_account_id: int | None = None,
         type: DestinationType | None = None,
@@ -32,7 +33,7 @@ class Destination(AppEntity):
 
         if name is not None:
             self.name = name
-            
+
         if platform is not None:
             self.platform = platform
 

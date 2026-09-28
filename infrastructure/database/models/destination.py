@@ -24,7 +24,7 @@ class DestinationModel(BaseModel):
         String(255),
         nullable=False,
     )
-    
+
     platform: Mapped[PlatformType] = mapped_column(
         Enum(PlatformType),
         nullable=False,

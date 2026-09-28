@@ -4,7 +4,7 @@ from .event_bus import IEventBus
 from .get_platform import IGetPlatform
 from .hash_service import IHashService
 from .log_service import ILogger
-from .read_media import IMediaService
+from .read_media import IStorageService
 from .send_app_service import ISender
 from .unit_of_work import IUnitOfWork
 from .status_service import IStatisticsService

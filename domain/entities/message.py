@@ -14,7 +14,12 @@ class Message(AppEntity):
     created_at: datetime = field(default_factory=datetime.now)
     updated_at: datetime | None = None
 
-    def update(self, media_id: int | None=None, type: MessageType | None=None, text: str | None=None):
+    def update(
+        self,
+        media_id: int | None = None,
+        type: MessageType | None = None,
+        text: str | None = None,
+    ):
         if media_id is not None:
             self.media_id = media_id
         if type is not None:

@@ -1,5 +1,5 @@
 from .encription import EncryptionService
-from .media_service import MediaService
+from .storage_service import StorageService
 from .hash_service import HashService
 from .log_service import LogService
 from .proccess_for_cron import ProccessCron

@@ -22,7 +22,7 @@ class RoleRepository(SQLAlchemyRepository[RoleModel], IRoleRepository):
     def create(self, entity: Role):
         model = self.mapper.to_model(entity)
         id = super().create(model)
-        return id 
+        return id
 
     def _get_role_or_raise(self, role_id: int) -> RoleModel:
         role = super().get_by_id(role_id)

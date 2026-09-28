@@ -80,44 +80,39 @@ class StatisticsService(IStatisticsService):
 
         return result
 
-    def destination_status(self) ->dict:
+    def destination_status(self) -> dict:
 
         with self.unit_of_work as uow:
             destinations = uow.Destination.get_all()
         result = {}
-        for destination in destinations :
-            result[destination.name]={
-                "platform" : destination.platform,
-                "bot_id":destination.bot_account_id,
-                "type" : destination.type,
-                "is_active":destination.is_active
+        for destination in destinations:
+            result[destination.name] = {
+                "platform": destination.platform,
+                "bot_id": destination.bot_account_id,
+                "type": destination.type,
+                "is_active": destination.is_active,
             }
-        
-        return result 
+
+        return result
 
     def message_target_status(self):
         result = {}
-        with self.unit_of_work as uow :
-            message_targets =uow.MessageTarget.get_today_messages()
-        
-        for target in message_targets :
+        with self.unit_of_work as uow:
+            message_targets = uow.MessageTarget.get_today_messages()
+
+        for target in message_targets:
             result[target.id] = {
-                "status" : target.status,
-                "destination_id" : target.destination_id,
-                "message_id" : target.message_id,
-                "send_at" : target.send_at,
-                "last_error": target.last_error
+                "status": target.status,
+                "destination_id": target.destination_id,
+                "message_id": target.message_id,
+                "send_at": target.send_at,
+                "last_error": target.last_error,
             }
         return result
-            
-        
-        
-        
-        
 
     def get_dashboard_data(self) -> dict:
         return {
             "messages": self.message_status(),
             "destinations": self.destination_status(),
-            "message_targets" : self.message_target_status(),
+            "message_targets": self.message_target_status(),
         }

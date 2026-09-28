@@ -43,16 +43,16 @@ class BotAccountRepository(
         super().delete(id)
 
     def get_by_id(self, id: int) -> BotAccount | None:
-        model =super().get_by_id(id)
-        if model :
+        model = super().get_by_id(id)
+        if model:
             return self.mapper.to_entity(model)
 
-    def get_all(self) -> list[BotAccount] :
-        models =super().get_all()
+    def get_all(self) -> list[BotAccount]:
+        models = super().get_all()
         result = []
-        for i in models :
+        for i in models:
             result.append(self.mapper.to_entity(i))
-        return result 
+        return result
 
     def get_by_platform(self, platform: PlatformType) -> list[BotAccount]:
         query = select(BotAccountModel).where(BotAccountModel.platform == platform)

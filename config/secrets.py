@@ -15,7 +15,6 @@ class _Secrets:
 
         return value
 
-
     @property
     def debug(self) -> bool:
         return os.getenv("DEBUG", "False").lower() == "true"

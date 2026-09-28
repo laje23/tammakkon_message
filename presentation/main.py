@@ -1,4 +1,4 @@
-from fastapi import FastAPI , Query , File, Form, UploadFile 
+from fastapi import FastAPI, Query, File, Form, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from presentation.controllers import *
@@ -26,24 +26,27 @@ app.add_middleware(
 # Schemas
 # =========================
 
+
 class LoginRequest(BaseModel):
     username: str
     password: str
+
 
 class UpdateBotRequest(BaseModel):
     name: str
     platform: str
     is_active: bool
     token: str | None = None
-    
+
+
 class UpdateDestinationRequest(BaseModel):
     name: str
     platform: str
     is_active: bool
-    external_id : str 
-    bot_account_id : int | None = None
-    type : str 
-    
+    external_id: str
+    bot_account_id: int | None = None
+    type: str
+
 
 class CreateBotRequest(BaseModel):
     name: str
@@ -60,6 +63,7 @@ class CreateDestinationRequest(BaseModel):
     bot_account_id: int | None
     type: str
 
+
 class CreateUserRequest(BaseModel):
     user_name: str
     password: str
@@ -71,35 +75,37 @@ class UpdateUserRequest(BaseModel):
     password: str | None = None
     is_active: bool
 
+
 class UpdateUserRolesRequest(BaseModel):
     remove_list: list[int] = []
     add_list: list[int] = []
 
+
 class UpdatePlatformSettingRequest(BaseModel):
-    limit_character  : int |None = None
-    limit_file_size  : int |None = None
-    bale_base_url  : str |None = None
-    bale_active  : bool |None = None
-    eitaa_base_url  : str |None = None
-    eitaa_active  : bool |None = None
-    robika_base_url  : str |None = None
-    robika_active : bool |None = None
+    limit_character: int | None = None
+    limit_file_size: int | None = None
+    bale_base_url: str | None = None
+    bale_active: bool | None = None
+    eitaa_base_url: str | None = None
+    eitaa_active: bool | None = None
+    robika_base_url: str | None = None
+    robika_active: bool | None = None
+
 
 class UpdateSenderSettingRequest(BaseModel):
-    time_out : int |None = None
-    max_try : int|None = None
-    use_poroxy : bool |None = None
+    time_out: int | None = None
+    max_try: int | None = None
+    use_poroxy: bool | None = None
 
 
 # =========================
 # Routes
 # =========================
 
+
 @app.get("/")
 async def root():
-    return {
-        "message": "Backend is running"
-    }
+    return {"message": "Backend is running"}
 
 
 @app.post("/login")
@@ -138,16 +144,14 @@ async def create_bot(data: CreateBotRequest):
 
 
 @app.put("/bot/{id}")
-async def update_bot(
-    id: int,
-    data: UpdateBotRequest
-):
+async def update_bot(id: int, data: UpdateBotRequest):
     return BotAccountController().update_bot_account(id, data)
 
 
 @app.delete("/bot/{id}")
 async def delete_bot(id: int):
     return BotAccountController().delete_bot_account(id)
+
 
 @app.get("/destination")
 async def get_destinations():
@@ -165,10 +169,7 @@ async def create_destination(data: CreateDestinationRequest):
 
 
 @app.put("/destination/{id}")
-async def update_destination(
-    id: int,
-    data: UpdateDestinationRequest
-):
+async def update_destination(id: int, data: UpdateDestinationRequest):
     return DestinationController().update_destination(id, data)
 
 
@@ -176,17 +177,16 @@ async def update_destination(
 async def delete_destination(id: int):
     return DestinationController().delete_destination(id)
 
+
 from fastapi import Query
+
 
 @app.get("/message")
 async def get_messages(
-    page: int = Query(1, ge=1),
-    page_size: int = Query(12, ge=1, le=100)
+    page: int = Query(1, ge=1), page_size: int = Query(12, ge=1, le=100)
 ):
-    return MessageController().get_messages(
-        page=page,
-        page_size=page_size
-    )
+    return MessageController().get_messages(page=page, page_size=page_size)
+
 
 @app.post("/message")
 async def create_message(
@@ -199,9 +199,10 @@ async def create_message(
         text=text,
         file=file,
     )
-    
+
+
 @app.get("/message/{id}")
-async def get_message(id:int):
+async def get_message(id: int):
     return MessageController().get_message_by_id(id)
 
 
@@ -209,24 +210,21 @@ async def get_message(id:int):
 async def get_media(id: int):
     return MessageController().get_media(id)
 
+
 @app.delete("/message/{id}")
 async def delete_message(id: int):
     return MessageController().delete_message(id)
 
+
 @app.put("/message/{id}")
-async def update_message(
-    id: int,
-    text: str = Form("")
-):
-    return MessageController().update_message(
-        id=id,
-        text=text
-    )
+async def update_message(id: int, text: str = Form("")):
+    return MessageController().update_message(id=id, text=text)
 
 
 # =========================
 # Users
 # =========================
+
 
 @app.get("/user")
 async def get_users():
@@ -245,15 +243,13 @@ async def create_user(data: CreateUserRequest):
 
 @app.put("/user/{id}")
 async def update_user(id: int, data: UpdateUserRequest):
-    return UserController().update_user(
-        id=id,
-        data=data
-    )
+    return UserController().update_user(id=id, data=data)
 
 
 @app.delete("/user/{id}")
 async def delete_user(id: int):
     return UserController().delete_user(id)
+
 
 @app.get("/user/{id}/roles")
 async def get_user_roles(id: int):
@@ -261,16 +257,14 @@ async def get_user_roles(id: int):
 
 
 @app.put("/user/{id}/roles")
-async def update_user_roles(
-    id: int,
-    data: UpdateUserRolesRequest
-):
-    return UserController().update_roles(id,data)
+async def update_user_roles(id: int, data: UpdateUserRolesRequest):
+    return UserController().update_roles(id, data)
 
 
 @app.get("/settings/logs")
 async def get_logs():
     return LogController().get_logs()
+
 
 @app.get("/settings/platforms")
 async def get_platform_setting():
@@ -278,9 +272,7 @@ async def get_platform_setting():
 
 
 @app.put("/settings/platforms")
-async def update_platform_setting(
-    data: UpdatePlatformSettingRequest
-):
+async def update_platform_setting(data: UpdatePlatformSettingRequest):
     return PlatformSettingController().update_setting(data)
 
 
@@ -290,7 +282,5 @@ async def get_sender_setting():
 
 
 @app.put("/settings/sends")
-async def update_sender_setting(
-    data: UpdateSenderSettingRequest
-):
+async def update_sender_setting(data: UpdateSenderSettingRequest):
     return SenderSettingController().update_setting(data)

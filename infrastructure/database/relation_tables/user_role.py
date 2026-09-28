@@ -15,4 +15,4 @@ user_role_table = Table(
         ForeignKey("roles.id", ondelete="CASCADE"),
         primary_key=True,
     ),
-) 
+)

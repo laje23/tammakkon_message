@@ -1,7 +1,7 @@
 from domain.exeptions import ValidationError, NotFoundError
 from infrastructure.database.repository import SQLAlchemyRepository
 from sqlalchemy.orm import Session
-from sqlalchemy import select , func
+from sqlalchemy import select, func
 from infrastructure.database.models import MessageModel
 from domain.entities import Message
 from infrastructure.database.mappers import MessageMapper
@@ -53,11 +53,7 @@ class MessageRepository(SQLAlchemyRepository[MessageModel], IMessageRepository):
 
         return entities
 
-    def get_paginated(
-        self,
-        page: int,
-        page_size: int = 12
-    )-> list[Message]:
+    def get_paginated(self, page: int, page_size: int = 12) -> list[Message]:
         offset = (page - 1) * page_size
 
         query = (
@@ -72,15 +68,12 @@ class MessageRepository(SQLAlchemyRepository[MessageModel], IMessageRepository):
         entities = []
 
         for model in models:
-            entities.append(
-                self.mapper.to_entity(model)
-            )
+            entities.append(self.mapper.to_entity(model))
 
         return entities
-    
+
     def get_totel_count(self):
         query = select(func.count()).select_from(self.model)
 
         total = self.session.execute(query).scalar_one()
         return total
-    
