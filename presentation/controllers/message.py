@@ -1,10 +1,13 @@
 from fastapi import UploadFile
-from domain.exeptions import NotFoundError
-from infrastructure.dependency_Injection import container
-from domain.entities import Message, Media
-import mimetypes
 from fastapi.responses import Response
+
+from domain.exeptions import NotFoundError
+from domain.entities import Message, Media
+from domain.types import MediaType
+from infrastructure.dependency_Injection import container
 from presentation.controllers.decorators import safe_class
+
+import mimetypes
 
 
 @safe_class
@@ -31,15 +34,11 @@ class MessageController:
         if file is not None:
             media_file = await file.read()
 
-            media_name = file.filename
-            media_size = len(media_file)
-            storage_name = file.filename
-
             media_id = self.create_media(
-                name=media_name,  # type: ignore
-                storage_name=storage_name,  # type: ignore
+                original_name=file.filename,  # type: ignore
+                _media_type=message_type,
                 media_file=media_file,
-                size=media_size,
+                size=len(media_file),
             )
 
         message = Message(
@@ -51,33 +50,56 @@ class MessageController:
         )
 
         with self.container.unit_of_work as uow:
+            self._log("message created")
             uow.Message.create(message)
-        self._log("message created")
 
-        return {"success": True, "message": "پیام با موفقیت ثبت شد"}
+
+        return {
+            "success": True,
+            "message": "پیام با موفقیت ثبت شد",
+        }
 
     def create_media(
         self,
-        name: str,
-        storage_name: str,
+        original_name: str,
+        _media_type: str,
         media_file: bytes,
         size: int,
     ):
-        storage_name = "storage/" + storage_name
-        self.container.media_service.save_media(storage_name, media_file)
-
-        media = Media(None, name, storage_name, size)
-
         with self.container.unit_of_work as uow:
+            media_type = MediaType(_media_type.lower())
+
+            stored_name = self.container.storage_service.save_media(
+                media_file=media_file,
+                media_type=media_type,
+                storage_name=original_name,
+            )
+
+            media = Media(
+                id=None,
+                original_name=original_name,
+                stored_name=stored_name,
+                media_type=media_type,
+                size=size,
+            )
+
             media_id = uow.Media.create(media)
 
-        self._log("media created")
+            self._log("media created")
+
         return media_id
 
-    def get_messages(self, page: int = 1, page_size: int = 12):
+    def get_messages(
+        self,
+        page: int = 1,
+        page_size: int = 12,
+    ):
         with self.container.unit_of_work as uow:
 
-            messages = uow.Message.get_paginated(page=page, page_size=page_size)
+            messages = uow.Message.get_paginated(
+                page=page,
+                page_size=page_size,
+            )
 
             total = uow.Message.get_totel_count()
 
@@ -93,8 +115,9 @@ class MessageController:
             "has_previous": page > 1,
         }
 
-    def get_message_by_id(self, id):
+    def get_message_by_id(self, id: int):
         with self.container.unit_of_work as uow:
+
             message = uow.Message.get_by_id(id)
 
             if not message:
@@ -108,40 +131,64 @@ class MessageController:
                 if not media:
                     raise NotFoundError("media not found")
 
-            return {"message": message, "media": media}
+            return {
+                "message": message,
+                "media": media,
+            }
 
     def get_media(self, id: int):
         with self.container.unit_of_work as uow:
+
             media = uow.Media.get_by_id(id)
 
             if not media:
                 raise NotFoundError("media not found")
 
-            media_file = self.container.media_service.read_media(media.stored_name)
+            media_file = self.container.storage_service.read_media(
+                storage_name=media.stored_name,
+                media_type=media.media_type,
+            )
 
-            media_type, _ = mimetypes.guess_type(media.stored_name)
+            mime_type, _ = mimetypes.guess_type(
+                media.original_name
+            )
 
             return Response(
-                content=media_file, media_type=media_type or "application/octet-stream"
+                content=media_file,
+                media_type=mime_type or "application/octet-stream",
             )
 
     def delete_message(self, id: int):
         with self.container.unit_of_work as uow:
+
             message = uow.Message.get_by_id(id)
 
             if not message:
                 raise NotFoundError("message not found")
+
             if message.id:
                 if uow.MessageTarget.exist_by_message_id(message.id):
-                    return {"success": False, "message": "پیام زمانبندی شده است"}
+                    return {
+                        "success": False,
+                        "message": "پیام زمانبندی شده است",
+                    }
 
             uow.Message.delete(id)
 
         self._log("message deleted")
-        return {"success": True, "message": "پیام با موفقیت حذف شد"}
 
-    def update_message(self, id: int, text: str):
+        return {
+            "success": True,
+            "message": "پیام با موفقیت حذف شد",
+        }
+
+    def update_message(
+        self,
+        id: int,
+        text: str,
+    ):
         with self.container.unit_of_work as uow:
+
             message = uow.Message.get_by_id(id)
 
             if not message:
@@ -152,4 +199,8 @@ class MessageController:
             uow.Message.update(message)
 
         self._log("message updated")
-        return {"success": True, "message": "پیام با موفقیت ویرایش شد"}
+
+        return {
+            "success": True,
+            "message": "پیام با موفقیت ویرایش شد",
+        }

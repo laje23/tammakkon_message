@@ -3,9 +3,10 @@ from infrastructure.dependency_Injection import container
 
 
 def log(message, src):
-    container.logger.log(
-        message, container.logger.category.SYSTEM, container.logger.level.ERROR, src
-    )
+    with container.unit_of_work :
+        container.logger.log(
+            message, container.logger.category.SYSTEM, container.logger.level.ERROR, src
+        )
 
 
 def safe_method(func):

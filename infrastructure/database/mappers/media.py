@@ -11,6 +11,7 @@ class MediaMapper:
             original_name=entity.original_name,
             stored_name=entity.stored_name,
             size=entity.size,
+            media_type = entity.media_type,
             created_at=entity.created_at,
             updated_at=entity.updated_at,
         )
@@ -19,6 +20,7 @@ class MediaMapper:
     def to_entity(model: MediaModel) -> Media:
         return Media(
             id=model.id,
+            media_type= model.media_type,
             original_name=model.original_name,
             stored_name=model.stored_name,
             size=model.size,
@@ -32,6 +34,7 @@ class MediaMapper:
         model: MediaModel,
     ) -> MediaModel:
 
+        model.media_type = entity.media_type
         model.original_name = entity.original_name
         model.stored_name = entity.stored_name
         model.updated_at = entity.updated_at

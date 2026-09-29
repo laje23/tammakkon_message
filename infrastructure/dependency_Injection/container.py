@@ -9,12 +9,10 @@ class _Container:
     _uow: IUnitOfWork | None = None
     _logger: ILogger | None = None
     _statistics_service: IStatisticsService | None = None
-    _command_bus: ICommandBus | None = None
-    _event_bus: IEventBus | None = None
     _hash_service: IHashService | None = None
     _encryption_service: IEncription | None = None
     _get_platform: IGetPlatform | None = None
-    _media_service: IStorageService | None = None
+    _storage_service: IStorageService | None = None
     _authentication: IAuthenticationService | None = None
 
     @property
@@ -34,7 +32,9 @@ class _Container:
     @property
     def statistics_service(self) -> IStatisticsService:
         if self._statistics_service is None:
-            self._statistics_service = StatisticsService(self.unit_of_work)
+            self._statistics_service = StatisticsService(
+                self.unit_of_work
+            )
 
         return self._statistics_service
 
@@ -60,17 +60,18 @@ class _Container:
         return self._get_platform
 
     @property
-    def media_service(self) -> IStorageService:
-        if self._media_service is None:
-            self._media_service = StorageService()
+    def storage_service(self) -> IStorageService:
+        if self._storage_service is None:
+            self._storage_service = StorageService()
 
-        return self._media_service
+        return self._storage_service
 
     @property
     def authentication(self) -> IAuthenticationService:
         if self._authentication is None:
             self._authentication = AuthenticationService(
-                self.unit_of_work, self.hash_service
+                self.unit_of_work,
+                self.hash_service,
             )
 
         return self._authentication

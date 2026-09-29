@@ -1,24 +1,69 @@
-from domain.interfaces import IUnitOfWork, IHashService, IAuthenticationService
+from domain.interfaces import (
+    IUnitOfWork,
+    IHashService,
+    IAuthenticationService,
+)
 from domain.types import PermissionType
 
 
 class AuthenticationService(IAuthenticationService):
 
-    def __init__(self, uow: IUnitOfWork, hash: IHashService) -> None:
+    def __init__(
+        self,
+        uow: IUnitOfWork,
+        hash: IHashService,
+    ) -> None:
         self.uow = uow
         self.hash = hash
 
-    def add_role_to_user(self, user_id: int, role_id: int):
+    def authenticate(
+        self,
+        username: str,
+        password: str,
+    ):
         with self.uow as uow:
-            self.uow.User.add_role(user_id, role_id)
 
-    def remove_role_from_user(self, user_id: int, role_id: int):
-        with self.uow as uow:
-            self.uow.User.remove_role(user_id, role_id)
+            user = uow.User.get_by_username(username)
 
-    def get_role(self, user_id: int):
+            if user is None:
+                return None
+
+            if not self.hash.verify(
+                password,
+                user.password,
+            ):
+                return None
+
+            return user
+
+    def add_role_to_user(
+        self,
+        user_id: int,
+        role_id: int,
+    ):
         with self.uow as uow:
-            return self.uow.User.get_roles(user_id)
+            uow.User.add_role(
+                user_id,
+                role_id,
+            )
+
+    def remove_role_from_user(
+        self,
+        user_id: int,
+        role_id: int,
+    ):
+        with self.uow as uow:
+            uow.User.remove_role(
+                user_id,
+                role_id,
+            )
+
+    def get_role(
+        self,
+        user_id: int,
+    ):
+        with self.uow as uow:
+            return uow.User.get_roles(user_id)
 
     def check_permission(
         self,
@@ -27,26 +72,30 @@ class AuthenticationService(IAuthenticationService):
     ) -> bool:
 
         roles = self.get_role(user_id)
+
         if not roles:
             return False
+
         with self.uow as uow:
+
             for role in roles:
-                if role.id:
-                    permissions = uow.Role.get_permissions(role.id)
-                    if permission in permissions:
-                        return True
+
+                if not role.id:
+                    continue
+
+                permissions = uow.Role.get_permissions(
+                    role.id
+                )
+
+                if permission in permissions:
+                    return True
+
         return False
 
-    def authenticate(self, username, password):
-        with self.uow as uow:
-            user = uow.User.get_by_username(username)
-        if not user:
-            return None
-
-        if self.hash.verify(password, user.password):
-            return user
-
-    def get_user_permissions(self, user_id: int) -> list[PermissionType]:
+    def get_user_permissions(
+        self,
+        user_id: int,
+    ) -> list[PermissionType]:
 
         roles = self.get_role(user_id)
 
@@ -56,12 +105,19 @@ class AuthenticationService(IAuthenticationService):
         permissions = []
 
         with self.uow as uow:
-            for role in roles:
-                if role.id:
-                    role_permissions = uow.Role.get_permissions(role.id)
 
-                    for permission in role_permissions:
-                        if permission not in permissions:
-                            permissions.append(permission)
+            for role in roles:
+
+                if not role.id:
+                    continue
+
+                role_permissions = uow.Role.get_permissions(
+                    role.id
+                )
+
+                for permission in role_permissions:
+
+                    if permission not in permissions:
+                        permissions.append(permission)
 
         return permissions

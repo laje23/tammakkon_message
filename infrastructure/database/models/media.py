@@ -1,6 +1,7 @@
 from datetime import datetime
 
-from sqlalchemy import DateTime, ForeignKey, String
+from domain.types import MediaType
+from sqlalchemy import DateTime, Enum, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from infrastructure.database.base import BaseModel
@@ -16,6 +17,11 @@ class MediaModel(BaseModel):
 
     original_name: Mapped[str] = mapped_column(
         String(255),
+        nullable=False,
+    )
+    
+    media_type: Mapped[MediaType] = mapped_column(
+        Enum(MediaType),
         nullable=False,
     )
 

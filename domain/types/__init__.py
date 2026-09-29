@@ -6,3 +6,4 @@ from .message_target_status import MessageTargetStatusType
 from .message_type import MessageType
 from .permission_type import PermissionType
 from .platform_type import PlatformType
+from .media_type import MediaType

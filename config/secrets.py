@@ -26,6 +26,7 @@ class _Secrets:
         if not value:
             raise RuntimeError("ENCRIPTION_KEY is not set")
         return value
+    
 
 
 secrets = _Secrets()

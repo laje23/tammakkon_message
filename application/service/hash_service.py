@@ -8,7 +8,7 @@ class HashService(IHashService):
 
     def __init__(self):
         self._hasher = PasswordHasher()
-
+    
     def hash(self, value: str) -> str:
         return self._hasher.hash(value)
 
