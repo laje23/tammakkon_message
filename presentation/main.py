@@ -10,7 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 from presentation.controllers import *
-
+from domain.types import PermissionType
 
 app = FastAPI()
 
@@ -116,6 +116,19 @@ class UpdateStorageSettingRequest(BaseModel):
     document: str | None = None
     storage_capacity_mb: int | None = None
 
+class UpdateRoleRequest(BaseModel):
+    name: str | None = None
+    description: str | None = None
+
+
+class CreateRoleRequest(BaseModel):
+    name: str = Field(..., min_length=2, max_length=100)
+    description: str | None = None
+
+
+class UpdateRolePermissionRequest(BaseModel):
+    add_list: list[PermissionType] = Field(default_factory=list)
+    remove_list: list[PermissionType] = Field(default_factory=list)
 
 # =========================
 # Public Routes
@@ -362,3 +375,49 @@ async def update_storege_setting(
     data: UpdateStorageSettingRequest,
 ):
     return StorageSettingController().update_setting(data)
+
+
+@app.put("/settings/roles/{id}")
+async def update_role(
+    id :int ,
+    data: UpdateRoleRequest,
+):
+    return RoleController().update_role(id , data)
+
+@app.delete("/settings/roles/{id}")
+async def delete_role(
+    id :int ,
+):
+    return RoleController().delete_role(id)
+
+@app.post("/settings/roles")
+async def create_role(
+    data: CreateRoleRequest,
+):
+    return RoleController().create_role(data)
+
+@app.get("/settings/roles")
+async def get_roles(
+):
+    return RoleController().get_roles()
+
+@app.get("/settings/roles/{id}/permissions")
+async def get_role_permissions(
+    id:int 
+):
+    return RoleController().get_role_permissions(id)
+
+@app.put("/settings/roles/{id}/permissions")
+async def update_role_permissions(
+    id:int,
+    data : UpdateRolePermissionRequest
+):
+    return RoleController().update_role_permissions(id , data)
+
+@app.get("/settings/roles/{id}")
+async def get_role(id: int):
+    return RoleController().get_role_by_id(id)
+
+@app.get("/auth/permissions/{id}")
+async def get_user_permission(id: int):
+    return UserController().get_user_permissions(id)

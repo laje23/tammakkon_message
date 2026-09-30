@@ -8,3 +8,4 @@ from .log import LogController
 from .platform_setting import PlatformSettingController
 from .sender_setting import SenderSettingController
 from .storage_setting import StorageSettingController
+from .role import RoleController

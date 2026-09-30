@@ -8,4 +8,3 @@ class PermissionType(Enum):
     MESSAGE = "message"
     USER = "user"
     SETTINGS = "settings"
-    LOG = "log"

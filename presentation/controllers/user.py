@@ -117,3 +117,13 @@ class UserController:
         with self.container.unit_of_work as uow:
             uow.User.remove_roles(user_id, remove_list)
             uow.User.add_roles(user_id, add_list)
+
+
+    def get_user_permissions(self , id :int):
+        with self.container.unit_of_work as uow :
+            roles =uow.User.get_roles(id)
+            permissions = set()
+            for role in roles :
+                if role.id :
+                    permissions.update(uow.Role.get_permissions(role.id))
+            return list(permissions)

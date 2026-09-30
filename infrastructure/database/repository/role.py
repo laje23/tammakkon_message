@@ -195,3 +195,58 @@ class RoleRepository(SQLAlchemyRepository[RoleModel], IRoleRepository):
             self.session.add(role_permission)
 
         self.session.flush()
+
+
+    def add_permissions(
+        self,
+        role_id: int,
+        permissions: list[PermissionType],
+    ) -> None:
+
+        self._get_role_or_raise(role_id)
+
+        for permission in permissions:
+
+            query = select(RolePermissionModel).where(
+                RolePermissionModel.role_id == role_id,
+                RolePermissionModel.permission == permission.value,
+            )
+
+            existing = self.session.scalar(query)
+
+            if existing is not None:
+                continue
+
+            role_permission = RolePermissionModel(
+                role_id=role_id,
+                permission=permission.value,
+            )
+
+            self.session.add(role_permission)
+
+        self.session.flush()
+
+
+    def remove_permissions(
+        self,
+        role_id: int,
+        permissions: list[PermissionType],
+    ) -> None:
+
+        self._get_role_or_raise(role_id)
+
+        for permission in permissions:
+
+            query = select(RolePermissionModel).where(
+                RolePermissionModel.role_id == role_id,
+                RolePermissionModel.permission == permission.value,
+            )
+
+            existing = self.session.scalar(query)
+
+            if existing is None:
+                continue
+
+            self.session.delete(existing)
+
+        self.session.flush()
