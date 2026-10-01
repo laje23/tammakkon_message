@@ -5,8 +5,7 @@ class ISender(ABC):
 
     @abstractmethod
     def send_text(
-        self, chat_id: str, token: str, text: str, file: bytes | None = None
-    ) -> bool: ...
+        self, chat_id: str, token: str, text: str, *args ): ...
 
     @abstractmethod
     def send_photo(self, chat_id: str, token: str, text: str, file: bytes) -> bool: ...

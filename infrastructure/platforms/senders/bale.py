@@ -16,7 +16,7 @@ class BaleSender(ISender):
             return False
 
     def send_text(
-        self, chat_id: str, token: str, text: str, file: bytes | None = None
+        self, chat_id: str, token: str, text: str, **args
     ) -> bool:
         data = self.Platform.send_text(token=token, text=text, chat_id=chat_id)
 
