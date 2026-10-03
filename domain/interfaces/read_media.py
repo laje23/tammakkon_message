@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from domain.types import MediaType
 
 class IStorageService(ABC):
-
+    storage_warning_active : bool
     @abstractmethod
     def read_media(self, storage_name: str, media_type: MediaType) -> bytes: ...
 
@@ -12,3 +12,6 @@ class IStorageService(ABC):
 
     @abstractmethod
     def get_storage_status(self) -> dict:...
+    
+    @abstractmethod
+    def check_folders_capacity(self)-> float : ...

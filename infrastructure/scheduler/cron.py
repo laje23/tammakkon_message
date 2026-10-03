@@ -1,7 +1,7 @@
 from typing import Callable
 from asyncio import sleep
 from inspect import iscoroutinefunction
-from infrastructure.scheduler.jobs import send_message
+from infrastructure.scheduler.jobs import send_message , check_storage_free_speace
 
 
 class BackgroundScheduler:
@@ -42,6 +42,6 @@ class BackgroundScheduler:
 background_scheduler=BackgroundScheduler(
     {
         send_message : 5,
-        
+        check_storage_free_speace : 30
     }
     )

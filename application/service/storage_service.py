@@ -4,9 +4,10 @@ from uuid import uuid4
 from config.storage import StorageConfig
 from domain.interfaces import IStorageService
 from domain.types import MediaType
-
+from domain.exeptions import InvalidStateError
 
 class StorageService(IStorageService):
+    storage_warning_active = False
 
     def __init__(self):
         self.root_path = Path(StorageConfig.storage_root_path)
@@ -57,13 +58,37 @@ class StorageService(IStorageService):
 
         return f"{uuid4().hex}{extension}"
 
+    def has_enough_space(self, file_size: int) -> bool:
+        """
+        Checks whether there is enough storage space for a new file.
+        """
+
+        if file_size < 0:
+            raise ValueError("File size cannot be negative")
+
+        size_data = self._get_directories_size()
+
+        total_used_size = sum(size_data.values())
+
+        max_capacity = StorageConfig.storage_capacity_mb * 1024 * 1024
+
+        remaining_space = max_capacity - total_used_size
+
+        return remaining_space >= file_size
+
     def save_media(
         self,
         media_file: bytes,
         media_type: MediaType,
         storage_name: str,
     ) -> str:
+
         self._initialize_storage()
+
+        file_size = len(media_file)
+
+        if not self.has_enough_space(file_size):
+            raise InvalidStateError("Not enough storage space")
 
         folder = self._get_media_folder(media_type)
 
@@ -107,3 +132,11 @@ class StorageService(IStorageService):
             "video_size": sizes.get(MediaType.VIDEO, 0),
             "document_size": sizes.get(MediaType.DOCUMENT, 0),
         }
+        
+    def check_folders_capacity(self) -> float:
+        size_data = self._get_directories_size()
+        total = sum(size_data.values())
+
+        max_capacity = StorageConfig.storage_capacity_mb * 1024 * 1024
+
+        return total / max_capacity * 100
