@@ -9,3 +9,4 @@ from .platform_setting import PlatformSettingController
 from .sender_setting import SenderSettingController
 from .storage_setting import StorageSettingController
 from .role import RoleController
+from .message_target import MessageTargetController

@@ -307,3 +307,31 @@ class Ruotes :
         @self.app.get("/auth/permissions/{id}")
         async def get_user_permission(id: int):
             return UserController().get_user_permissions(id)
+        
+        @self.app.get("/message_target")
+        async def get_message_targets():
+            return MessageTargetController().get_all_message_target()
+
+
+        @self.app.get("/message_target/{id}")
+        async def get_message_target(id: int):
+            return MessageTargetController().get_message_target_by_id(id)
+
+
+        @self.app.post("/message_target")
+        async def create_message_target(data: CreateMessageTargetRequest):
+            return MessageTargetController().create_message_target(data)
+
+
+        @self.app.put("/message_target/{id}/cancel")
+        async def cancel_message_target(id: int):
+            return MessageTargetController().cancel_message_target(id)
+
+        @self.app.put("/message_target/{id}/resume")
+        async def resume_message_target(id: int):
+            return MessageTargetController().resume_message_target(id)
+
+
+        @self.app.delete("/message_target/{id}")
+        async def delete_message_target(id: int):
+            return MessageTargetController().delete_message_target(id)

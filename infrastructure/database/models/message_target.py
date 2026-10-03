@@ -1,12 +1,11 @@
 from datetime import datetime
 
 from sqlalchemy import DateTime, Enum, ForeignKey, Integer, Text
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
+from infrastructure.database.models import MessageModel , DestinationModel
 from domain.types.message_target_status import MessageTargetStatusType
 from infrastructure.database.base import BaseModel
-
-
 class MessageTargetModel(BaseModel):
     __tablename__ = "message_targets"
 
@@ -54,4 +53,15 @@ class MessageTargetModel(BaseModel):
     updated_at: Mapped[datetime | None] = mapped_column(
         DateTime,
         nullable=True,
+    )
+
+    # ORM relationships
+    message: Mapped[MessageModel] = relationship(
+        "MessageModel",
+        lazy="select",
+    )
+
+    destination: Mapped[DestinationModel] = relationship(
+        "DestinationModel",
+        lazy="select",
     )

@@ -2,8 +2,8 @@ from infrastructure.platforms.senders import *
 from domain.entities import MessageTarget , Message , Destination , Media , BotAccount
 from infrastructure.dependency_Injection import container
 from domain.exeptions import NotFoundError , InvalidStateError ,AppError
-from domain.interfaces import ISender
 from typing import Callable
+from domain.types import MessageTargetStatusType
 
 class SendService :
     
@@ -35,13 +35,14 @@ class SendService :
     
     
     async def send_message(self , message_target:MessageTarget)-> bool:
+        message_target.change_status(MessageTargetStatusType.PROCESSING)
         file = None
         data = self.get_send_message_data(message_target)
         if not data["ssucces"] :
-            self.error_handler(data["type"] , data["message"])
+            self.error_handler( message_target , data["type"] , data["message"])
             return False
         message , bot , media , destination = data["result"]
-        send_func=self.proccess_message_data(message , bot , destination) 
+        send_func=self.proccess_message_data(message , destination) 
         if media :
             file=self.get_meida(media.stored_name, media.type.value)
         
@@ -50,8 +51,14 @@ class SendService :
         return result 
         
         
-    def error_handler(self , error_type , message):
+    def error_handler(self ,message_target, error_type , message):
         self._log(message + "error : "+ error_type.__class__.__name__)
+        
+        message_target.increase_retry_count()
+        message_target.save_last_error(f"{error_type} : {message}")
+        message_target.change_status(MessageTargetStatusType.FAILED)
+        with container.unit_of_work as uow :
+            uow.MessageTarget.update(message_target)
         raise error_type(message)     
     
     
@@ -105,7 +112,7 @@ class SendService :
                 
             }
         
-    def proccess_message_data(self , message:Message , bot: BotAccount , destination: Destination)-> Callable:
+    def proccess_message_data(self , message:Message  , destination: Destination)-> Callable:
         platform=destination.platform
         sender =self.senders[platform.value]
         func=self.message_type[message.type.value]

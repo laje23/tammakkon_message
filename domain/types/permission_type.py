@@ -8,3 +8,6 @@ class PermissionType(Enum):
     MESSAGE = "message"
     USER = "user"
     SETTINGS = "settings"
+    SCHEDULE = "schedule"
+    DESTINATION = "destination"
+    BOT = "bot"

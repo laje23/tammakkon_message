@@ -1,4 +1,4 @@
-
+from datetime import datetime
 from pydantic import BaseModel, Field
 from domain.types import PermissionType
 
@@ -97,3 +97,8 @@ class CreateRoleRequest(BaseModel):
 class UpdateRolePermissionRequest(BaseModel):
     add_list: list[PermissionType] = Field(default_factory=list)
     remove_list: list[PermissionType] = Field(default_factory=list)
+
+class CreateMessageTargetRequest(BaseModel):
+    message_id : int = Field(gt=0)
+    destination_id : int = Field(gt=0)
+    send_at: datetime
