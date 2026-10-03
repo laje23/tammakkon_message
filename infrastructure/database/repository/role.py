@@ -196,7 +196,6 @@ class RoleRepository(SQLAlchemyRepository[RoleModel], IRoleRepository):
 
         self.session.flush()
 
-
     def add_permissions(
         self,
         role_id: int,
@@ -225,7 +224,6 @@ class RoleRepository(SQLAlchemyRepository[RoleModel], IRoleRepository):
             self.session.add(role_permission)
 
         self.session.flush()
-
 
     def remove_permissions(
         self,

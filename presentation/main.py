@@ -35,9 +35,7 @@ class Main:
     @asynccontextmanager
     async def lifespan(self, app: FastAPI):
 
-        self.scheduler_task = asyncio.create_task(
-            background_scheduler.start()
-        )
+        self.scheduler_task = asyncio.create_task(background_scheduler.start())
 
         yield
 

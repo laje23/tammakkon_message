@@ -5,6 +5,7 @@ from domain.types.message_target_status import MessageTargetStatusType
 from domain.base import AppEntity
 from domain.exeptions import InvalidStateError
 
+
 @dataclass
 class MessageTarget(AppEntity):
     id: int | None
@@ -31,16 +32,12 @@ class MessageTarget(AppEntity):
 
     def cancel(self):
         if self.status != MessageTargetStatusType.PENDING:
-            raise InvalidStateError(
-                "only pending message targets can be canceled"
-            )
+            raise InvalidStateError("only pending message targets can be canceled")
         self.status = MessageTargetStatusType.CANCELED
         self.updated_at = datetime.now()
 
     def resume(self):
         if self.status != MessageTargetStatusType.CANCELED:
-            raise InvalidStateError(
-                "only canceled message targets can be resume"
-            )
+            raise InvalidStateError("only canceled message targets can be resume")
         self.status = MessageTargetStatusType.PENDING
         self.updated_at = datetime.now()

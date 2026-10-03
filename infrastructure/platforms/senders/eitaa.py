@@ -15,7 +15,7 @@ class EitaaSender(ISender):
         else:
             return False
 
-    def send_text(self, chat_id: str, token: str, text: str , *args) -> bool:
+    def send_text(self, chat_id: str, token: str, text: str, *args) -> bool:
         data = self.Platform.send_text(token=token, text=text, chat_id=chat_id)
 
         response_data = self._send_post(data)

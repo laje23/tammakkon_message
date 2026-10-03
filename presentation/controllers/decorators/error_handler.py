@@ -3,7 +3,7 @@ from infrastructure.dependency_Injection import container
 
 
 def log(message, src):
-    with container.unit_of_work :
+    with container.unit_of_work:
         container.logger.log(
             message, container.logger.category.SYSTEM, container.logger.level.ERROR, src
         )

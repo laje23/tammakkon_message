@@ -1,7 +1,6 @@
 from infrastructure.dependency_Injection import container
 
 
-
 def check_storage_usage():
 
     used_percent = container.storage_service.check_folders_capacity()
@@ -11,7 +10,7 @@ def check_storage_usage():
             f"Storage capacity is {used_percent:.2f}% used",
             container.logger.category.SYSTEM,
             container.logger.level.WARNING,
-            "check_storage_usage"
+            "check_storage_usage",
         )
 
         container.storage_service.storage_warning_active = True

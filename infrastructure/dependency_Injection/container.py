@@ -32,9 +32,7 @@ class _Container:
     @property
     def statistics_service(self) -> IStatisticsService:
         if self._statistics_service is None:
-            self._statistics_service = StatisticsService(
-                self.unit_of_work
-            )
+            self._statistics_service = StatisticsService(self.unit_of_work)
 
         return self._statistics_service
 

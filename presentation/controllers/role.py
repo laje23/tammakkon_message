@@ -1,4 +1,3 @@
-
 from infrastructure.dependency_Injection import container
 from domain.exeptions import NotFoundError
 from presentation.controllers.decorators import safe_class

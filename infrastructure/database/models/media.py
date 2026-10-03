@@ -19,7 +19,7 @@ class MediaModel(BaseModel):
         String(255),
         nullable=False,
     )
-    
+
     media_type: Mapped[MediaType] = mapped_column(
         Enum(MediaType),
         nullable=False,

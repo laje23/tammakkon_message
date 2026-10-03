@@ -53,7 +53,6 @@ class MessageController:
             self._log("message created")
             uow.Message.create(message)
 
-
         return {
             "success": True,
             "message": "پیام با موفقیت ثبت شد",
@@ -149,9 +148,7 @@ class MessageController:
                 media_type=media.media_type,
             )
 
-            mime_type, _ = mimetypes.guess_type(
-                media.original_name
-            )
+            mime_type, _ = mimetypes.guess_type(media.original_name)
 
             return Response(
                 content=media_file,

@@ -1,7 +1,7 @@
 from typing import Callable
 from asyncio import sleep
 from inspect import iscoroutinefunction
-from infrastructure.scheduler.jobs import send_message , check_storage_free_speace
+from infrastructure.scheduler.jobs import send_message, check_storage_usage
 
 
 class BackgroundScheduler:
@@ -15,10 +15,7 @@ class BackgroundScheduler:
             if set_time <= 0:
                 raise ValueError("Job interval must be greater than zero")
 
-            self.jobs[func] = {
-                "counter": 0,
-                "set_time": set_time
-            }
+            self.jobs[func] = {"counter": 0, "set_time": set_time}
 
     async def start(self, sleep_time: int = 60):
 
@@ -38,10 +35,6 @@ class BackgroundScheduler:
                         func()
 
             await sleep(sleep_time)
-            
-background_scheduler=BackgroundScheduler(
-    {
-        send_message : 5,
-        check_storage_free_speace : 30
-    }
-    )
+
+
+background_scheduler = BackgroundScheduler({send_message: 5, check_storage_usage: 30})

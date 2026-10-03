@@ -4,8 +4,7 @@ from abc import ABC, abstractmethod
 class ISender(ABC):
 
     @abstractmethod
-    def send_text(
-        self, chat_id: str, token: str, text: str, *args ): ...
+    def send_text(self, chat_id: str, token: str, text: str, *args): ...
 
     @abstractmethod
     def send_photo(self, chat_id: str, token: str, text: str, file: bytes) -> bool: ...

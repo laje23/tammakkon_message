@@ -6,6 +6,7 @@ from domain.interfaces import IStorageService
 from domain.types import MediaType
 from domain.exeptions import InvalidStateError
 
+
 class StorageService(IStorageService):
     storage_warning_active = False
 
@@ -47,9 +48,7 @@ class StorageService(IStorageService):
         folder = self._get_media_folders().get(media_type)
 
         if folder is None:
-            raise ValueError(
-                f"Unsupported media type: {media_type}"
-            )
+            raise ValueError(f"Unsupported media type: {media_type}")
 
         return folder
 
@@ -123,16 +122,13 @@ class StorageService(IStorageService):
         return {
             "used_size": used_size,
             "capacity": capacity,
-            "used_percentage": (
-                (used_size / capacity) * 100
-                if capacity > 0 else 0
-            ),
+            "used_percentage": ((used_size / capacity) * 100 if capacity > 0 else 0),
             "photo_size": sizes.get(MediaType.PHOTO, 0),
             "audio_size": sizes.get(MediaType.AUDIO, 0),
             "video_size": sizes.get(MediaType.VIDEO, 0),
             "document_size": sizes.get(MediaType.DOCUMENT, 0),
         }
-        
+
     def check_folders_capacity(self) -> float:
         size_data = self._get_directories_size()
         total = sum(size_data.values())

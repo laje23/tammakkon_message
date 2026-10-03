@@ -84,6 +84,7 @@ class UpdateStorageSettingRequest(BaseModel):
     document: str | None = None
     storage_capacity_mb: int | None = None
 
+
 class UpdateRoleRequest(BaseModel):
     name: str | None = None
     description: str | None = None
@@ -98,7 +99,8 @@ class UpdateRolePermissionRequest(BaseModel):
     add_list: list[PermissionType] = Field(default_factory=list)
     remove_list: list[PermissionType] = Field(default_factory=list)
 
+
 class CreateMessageTargetRequest(BaseModel):
-    message_id : int = Field(gt=0)
-    destination_id : int = Field(gt=0)
+    message_id: int = Field(gt=0)
+    destination_id: int = Field(gt=0)
     send_at: datetime

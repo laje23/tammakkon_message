@@ -1,6 +1,6 @@
 from domain.exeptions import ValidationError, NotFoundError
 from infrastructure.database.repository import SQLAlchemyRepository
-from sqlalchemy.orm import Session , joinedload
+from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import select, and_
 from infrastructure.database.models import MessageTargetModel
 from domain.entities import MessageTarget
@@ -8,6 +8,7 @@ from infrastructure.database.mappers import MessageTargetMapper
 from domain.repositories import IMessageTargetRepository
 from datetime import datetime, timedelta
 from domain.types import MessageTargetStatusType
+
 
 class MessageTargetRepository(
     SQLAlchemyRepository[MessageTargetModel], IMessageTargetRepository
@@ -99,7 +100,6 @@ class MessageTargetRepository(
 
         return self.session.execute(query).first() is not None
 
-
     def get_all_with_details(self) -> list[dict]:
         query = (
             select(self.model)
@@ -115,32 +115,39 @@ class MessageTargetRepository(
         result = []
 
         for target in models:
-            result.append({
-                "id": target.id,
-                "message_id": target.message_id,
-                "destination_id": target.destination_id,
-
-                "status": target.status.value,
-                "retry_count": target.retry_count,
-                "last_error": target.last_error,
-                "send_at": target.send_at,
-                "created_at": target.created_at,
-                "updated_at": target.updated_at,
-
-                "message": {
-                    "id": target.message.id,
-                    "type": target.message.type.value,
-                    "text": target.message.text,
-                    "media_id": target.message.media_id,
-                } if target.message else None,
-
-                "destination": {
-                    "id": target.destination.id,
-                    "name": target.destination.name,
-                    "platform": target.destination.platform.value,
-                    "type": target.destination.type.value,
-                    "is_active": target.destination.is_active,
-                } if target.destination else None,
-            })
+            result.append(
+                {
+                    "id": target.id,
+                    "message_id": target.message_id,
+                    "destination_id": target.destination_id,
+                    "status": target.status.value,
+                    "retry_count": target.retry_count,
+                    "last_error": target.last_error,
+                    "send_at": target.send_at,
+                    "created_at": target.created_at,
+                    "updated_at": target.updated_at,
+                    "message": (
+                        {
+                            "id": target.message.id,
+                            "type": target.message.type.value,
+                            "text": target.message.text,
+                            "media_id": target.message.media_id,
+                        }
+                        if target.message
+                        else None
+                    ),
+                    "destination": (
+                        {
+                            "id": target.destination.id,
+                            "name": target.destination.name,
+                            "platform": target.destination.platform.value,
+                            "type": target.destination.type.value,
+                            "is_active": target.destination.is_active,
+                        }
+                        if target.destination
+                        else None
+                    ),
+                }
+            )
 
         return result

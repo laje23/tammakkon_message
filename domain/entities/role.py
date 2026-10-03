@@ -11,7 +11,7 @@ class Role(AppEntity):
     created_at: datetime = field(default_factory=datetime.now)
     updated_at: datetime | None = None
 
-    def update(self, name: str | None = None, description : str | None = None):
+    def update(self, name: str | None = None, description: str | None = None):
         if name is not None:
             self.name = name
 

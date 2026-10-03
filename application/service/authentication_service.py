@@ -83,9 +83,7 @@ class AuthenticationService(IAuthenticationService):
                 if not role.id:
                     continue
 
-                permissions = uow.Role.get_permissions(
-                    role.id
-                )
+                permissions = uow.Role.get_permissions(role.id)
 
                 if permission in permissions:
                     return True
@@ -111,9 +109,7 @@ class AuthenticationService(IAuthenticationService):
                 if not role.id:
                     continue
 
-                role_permissions = uow.Role.get_permissions(
-                    role.id
-                )
+                role_permissions = uow.Role.get_permissions(role.id)
 
                 for permission in role_permissions:
 
