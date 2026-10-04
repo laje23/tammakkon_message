@@ -34,12 +34,18 @@ class SendService:
             )
 
     async def send_message(self, message_target: MessageTarget) -> bool:
-        message_target.change_status(MessageTargetStatusType.PROCESSING)
+        print("send message internal")
         file = None
         data = self.get_send_message_data(message_target)
+        print(data)
+        
         if not data["ssucces"]:
+            print("not data ssucces")
+
             self.error_handler(message_target, data["type"], data["message"])
             return False
+        
+        print("data ssucces")
         message, bot, media, destination = data["result"]
         send_func = self.proccess_message_data(message, destination)
         if media:
@@ -62,11 +68,15 @@ class SendService:
         raise error_type(message)
 
     def get_send_message_data(self, message_target: MessageTarget):
+        print("get send message data")
+        
         media = None
         with container.unit_of_work as uow:
 
             message = uow.Message.get_by_id(message_target.message_id)
             if not message:
+                print("not message ")
+                
                 return {
                     "ssucces": False,
                     "type": NotFoundError,
@@ -75,6 +85,7 @@ class SendService:
 
             destination = uow.Destination.get_by_id(message_target.destination_id)
             if not destination:
+                print("not DESTINATION ")
                 return {
                     "ssucces": False,
                     "type": NotFoundError,
@@ -82,6 +93,7 @@ class SendService:
                 }
 
             if not destination.bot_account_id:
+                print("not .bot_account ")
                 return {
                     "ssucces": False,
                     "type": InvalidStateError,
@@ -90,6 +102,7 @@ class SendService:
 
             bot = uow.BotAccount.get_by_id(destination.bot_account_id)
             if not bot:
+                print("not bot_account ")
                 return {
                     "ssucces": False,
                     "type": NotFoundError,
@@ -97,6 +110,7 @@ class SendService:
                 }
 
             if message.media_id:
+                print("not meida ")
                 media = uow.Media.get_by_id(message.media_id)
                 if not media:
                     return {

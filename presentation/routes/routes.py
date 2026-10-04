@@ -272,7 +272,7 @@ class Ruotes:
 
         @self.app.get("/message_target")
         async def get_message_targets():
-            return MessageTargetController().get_all_message_target()
+            return MessageTargetController().get_all_message_target_with_details()
 
         @self.app.get("/message_target/{id}")
         async def get_message_target(id: int):

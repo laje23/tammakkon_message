@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker, mapped_column, Mapped
 from config import secrets
 
-engine = create_engine(secrets.database_url, echo=True)
+engine = create_engine(secrets.database_url)
 
 sessionlocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 

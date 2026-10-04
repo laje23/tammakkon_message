@@ -61,7 +61,8 @@ class MessageTargetRepository(
         query = select(self.model).where(
             and_(
                 self.model.send_at <= datetime.now(),
-                self.model.status == MessageTargetStatusType.PENDING,
+                self.model.status != MessageTargetStatusType.SENT,
+                self.model.status != MessageTargetStatusType.CANCELED,
             )
         )
         models = self.session.execute(query).scalars().all()
