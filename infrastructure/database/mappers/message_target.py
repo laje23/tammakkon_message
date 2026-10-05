@@ -30,6 +30,8 @@ class MessageTargetMapper:
             send_at=model.send_at,
             created_at=model.created_at,
             updated_at=model.updated_at,
+            message=model.message,
+            destination=model.destination,
         )
 
     @staticmethod

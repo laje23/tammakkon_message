@@ -5,6 +5,8 @@ from sqlalchemy.orm import Mapped, mapped_column
 
 from domain.types import PlatformType
 from infrastructure.database.base import BaseModel
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from infrastructure.database.models.media import MediaModel
 
 
 class BotAccountModel(BaseModel):

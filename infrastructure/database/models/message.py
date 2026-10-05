@@ -1,10 +1,11 @@
 from datetime import datetime
 
 from sqlalchemy import DateTime, Enum, ForeignKey, Text
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from domain.types import MessageType
 from infrastructure.database.base import BaseModel
+from infrastructure.database.models import MediaModel
 
 
 class MessageModel(BaseModel):
@@ -42,4 +43,9 @@ class MessageModel(BaseModel):
     updated_at: Mapped[datetime | None] = mapped_column(
         DateTime,
         nullable=True,
+    )
+
+    media: Mapped[MediaModel | None] = relationship(
+        "MediaModel",
+        lazy="select",
     )

@@ -1,10 +1,11 @@
 from datetime import datetime
-from domain.types import PlatformType
-from sqlalchemy import Boolean, DateTime, Enum, ForeignKey, String
-from sqlalchemy.orm import Mapped, mapped_column
 
-from domain.types import DestinationType
+from domain.types import PlatformType, DestinationType
+from sqlalchemy import Boolean, DateTime, Enum, ForeignKey, String
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
 from infrastructure.database.base import BaseModel
+from infrastructure.database.models import BotAccountModel
 
 
 class DestinationModel(BaseModel):
@@ -53,4 +54,9 @@ class DestinationModel(BaseModel):
     updated_at: Mapped[datetime | None] = mapped_column(
         DateTime,
         nullable=True,
+    )
+
+    bot_account: Mapped[BotAccountModel | None] = relationship(
+        "BotAccountModel",
+        lazy="select",
     )

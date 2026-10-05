@@ -2,7 +2,11 @@ from domain.exeptions import ValidationError, NotFoundError
 from infrastructure.database.repository import SQLAlchemyRepository
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import select, and_
-from infrastructure.database.models import MessageTargetModel
+from infrastructure.database.models import (
+    MessageTargetModel,
+    MessageModel,
+    DestinationModel,
+)
 from domain.entities import MessageTarget
 from infrastructure.database.mappers import MessageTargetMapper
 from domain.repositories import IMessageTargetRepository
@@ -58,21 +62,27 @@ class MessageTargetRepository(
         return entities
 
     def get_due(self) -> list[MessageTarget]:
-        query = select(self.model).where(
-            and_(
-                self.model.send_at <= datetime.now(),
-                self.model.status != MessageTargetStatusType.SENT,
-                self.model.status != MessageTargetStatusType.CANCELED,
+
+        query = (
+            select(self.model)
+            .options(
+                joinedload(self.model.message).joinedload(MessageModel.media),
+                joinedload(self.model.destination).joinedload(
+                    DestinationModel.bot_account
+                ),
+            )
+            .where(
+                and_(
+                    self.model.send_at <= datetime.now(),
+                    self.model.status != MessageTargetStatusType.SENT,
+                    self.model.status != MessageTargetStatusType.CANCELED,
+                )
             )
         )
+
         models = self.session.execute(query).scalars().all()
 
-        entities = []
-        if models:
-
-            for model in models:
-                entities.append(self.mapper.to_entity(model))
-        return entities
+        return [self.mapper.to_entity(model) for model in models]
 
     def get_today_messages(self) -> list[MessageTarget]:
         today = datetime.today().date()

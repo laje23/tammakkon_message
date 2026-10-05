@@ -14,7 +14,7 @@ async def send_message():
 
     for message in messages:
         print("send message : for ")
-        
+
         reasult = await sender.send_message(message)
 
         with container.unit_of_work as uow:

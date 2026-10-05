@@ -45,8 +45,34 @@ class _Container:
 
     @property
     def encryption_service(self) -> IEncription:
+
+        print("CONTAINER - encryption_service START", flush=True)
+
         if self._encryption_service is None:
+
+            print(
+                "CONTAINER - creating EncryptionService",
+                flush=True,
+            )
+
             self._encryption_service = EncryptionService()
+
+            print(
+                "CONTAINER - EncryptionService CREATED",
+                flush=True,
+            )
+
+        else:
+
+            print(
+                "CONTAINER - using existing EncryptionService",
+                flush=True,
+            )
+
+        print(
+            "CONTAINER - encryption_service RETURN",
+            flush=True,
+        )
 
         return self._encryption_service
 
